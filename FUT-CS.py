@@ -1,7 +1,7 @@
 import random
 import sys
+import time
 from time import sleep
-
 import pygame
 from pygame import *
 
@@ -77,7 +77,9 @@ def screenInformacion():
 # ----------------------------------- Iniciando la Ventana de Configuración -----------------------------------
 equipoSeleccionado = None
 enSeleccionEquipo = False
+equipo = 1
 def screenConfiguracion():
+    global equipo
     global equipoSeleccionado #Globalizando mi variable para el equipo del personaje
     global enSeleccionEquipo #Globalizando mi variable para saber si estoy en ventanas de selección de jugadores
     pygame.mixer.music.set_volume(volumenGlobal) #Manteniendo el volumen
@@ -102,12 +104,15 @@ def screenConfiguracion():
     # ---- Creando Botones para la Selección del Equipo ----
     # ---- Cargando las imágenes de los botones ----
     # ---- Imágenes Seleccionadas ----
+    equipo = 1
     imagenSeleccionadaOpcion1 = pygame.image.load("Imagenes//Seleccionado.png") #Agregando Imagen representativa del botón seleccionado
     imagenSeleccionadaOpcion1 = pygame.transform.scale(imagenSeleccionadaOpcion1, (70, 70)) #Ajustando el tamaño
     posicionOpcion1 = ventanaConfiguracion.blit(imagenSeleccionadaOpcion1, (190,470)) #Visualizar la imagen con su posición
+    equipo = 2
     imagenSeleccionadaOpcion2 = pygame.image.load("Imagenes//Seleccionado.png") #Agregando Imagen representativa del botón seleccionado
     imagenSeleccionadaOpcion2 = pygame.transform.scale(imagenSeleccionadaOpcion2, (70, 70)) #Ajustando el tamaño
     posicionOpcion2 = ventanaConfiguracion.blit(imagenSeleccionadaOpcion2, (440,470)) #Visualizar la imagen con su posición
+    equipo = 3
     imagenSeleccionadaOpcion3 = pygame.image.load("Imagenes//Seleccionado.png") #Agregando Imagen representativa del botón seleccionado
     imagenSeleccionadaOpcion3 = pygame.transform.scale(imagenSeleccionadaOpcion3, (70, 70)) #Ajustando el tamaño
     posicionOpcion3 = ventanaConfiguracion.blit(imagenSeleccionadaOpcion3, (690,470)) #Visualizar la imagen con su posición
@@ -304,77 +309,77 @@ def screenSeleccion1():
 
 # ----------------------------------- Iniciando la Ventana de Selección 2 -----------------------------------
 def screenSeleccion2():
-    global enSeleccionEquipo #Globalizando mi variable para saber si estoy en ventanas de selección de jugadores
-    pygame.mixer.music.set_volume(volumenGlobal) #Manteniendo el volumen
-    ventanaSeleccion2 = pygame.display.set_mode(sizeScreen) #Creación de Ventana
-    fondoVentanaSeleccion2 = pygame.image.load("Imagenes//fondoSeleccion.png") #Agregando fondo de pantalla de Selección 1
-    ventanaSeleccion2.blit(fondoVentanaSeleccion2, (0,0)) #Visualizar el fondo
+    global enSeleccionEquipo  # Globalizando mi variable para saber si estoy en ventanas de selección de jugadores
+    pygame.mixer.music.set_volume(volumenGlobal)  # Manteniendo el volumen
+    ventanaSeleccion2 = pygame.display.set_mode(sizeScreen)  # Creación de Ventana
+    fondoVentanaSeleccion2 = pygame.image.load("Imagenes//fondoSeleccion.png")  # Agregando fondo de pantalla de Selección 1
+    ventanaSeleccion2.blit(fondoVentanaSeleccion2, (0, 0))  # Visualizar el fondo
     # ---- Botón de Regreso ----
-    botonRegreso = pygame.image.load("Imagenes//botondeRegreso.png") #Agregando Imagen representativa de botón de regreso
-    botonRegreso = pygame.transform.scale(botonRegreso, (45, 45)) #Ajustando el tamaño
-    ventanaSeleccion2.blit(botonRegreso, (10,10)) #Visualizar la imagen con su posición
+    botonRegreso = pygame.image.load("Imagenes//botondeRegreso.png")  # Agregando Imagen representativa de botón de regreso
+    botonRegreso = pygame.transform.scale(botonRegreso, (45, 45))  # Ajustando el tamaño
+    ventanaSeleccion2.blit(botonRegreso, (10, 10))  # Visualizar la imagen con su posición
     # ---- Imágen de los jugadores ----
-    imagenKane = pygame.image.load("Imagenes//Raphinha.png") #Agregando imagen de Raphinha
-    imagenKane = pygame.transform.scale(imagenKane, (180, 175)) #Ajustando el tamaño
-    ventanaSeleccion2.blit(imagenKane, (100,130)) #Visualizar la imagen con su posición
-    imagenMuller = pygame.image.load("Imagenes//RobertLewandowski.png") #Agregando imagen de Lewandowski
-    imagenMuller = pygame.transform.scale(imagenMuller, (180, 175)) #Ajustando el tamaño
-    ventanaSeleccion2.blit(imagenMuller, (360,130)) #Visualizar la imagen con su posición
-    imagenMusiala = pygame.image.load("Imagenes//FerranTorres.png") #Agregando imagen de Torres
-    imagenMusiala = pygame.transform.scale(imagenMusiala, (180, 175)) #Ajustando el tamaño
-    ventanaSeleccion2.blit(imagenMusiala, (615,130)) #Visualizar la imagen con su posición
+    imagenKane = pygame.image.load("Imagenes//Raphinha.png")  # Agregando imagen de Raphinha
+    imagenKane = pygame.transform.scale(imagenKane, (180, 175))  # Ajustando el tamaño
+    ventanaSeleccion2.blit(imagenKane, (100, 130))  # Visualizar la imagen con su posición
+    imagenMuller = pygame.image.load("Imagenes//RobertLewandowski.png")  # Agregando imagen de Lewandowski
+    imagenMuller = pygame.transform.scale(imagenMuller, (180, 175))  # Ajustando el tamaño
+    ventanaSeleccion2.blit(imagenMuller, (360, 130))  # Visualizar la imagen con su posición
+    imagenMusiala = pygame.image.load("Imagenes//FerranTorres.png")  # Agregando imagen de Torres
+    imagenMusiala = pygame.transform.scale(imagenMusiala, (180, 175))  # Ajustando el tamaño
+    ventanaSeleccion2.blit(imagenMusiala, (615, 130))  # Visualizar la imagen con su posición
     # ---- Imágen de los botones de selección jugadores----
     # ---- Imágenes Seleccionadas ----
-    imagenSeleccionadaOpcion1 = pygame.image.load("Imagenes//encendido.png") #Agregando Imagen representativa del botón seleccionado
-    imagenSeleccionadaOpcion1 = pygame.transform.scale(imagenSeleccionadaOpcion1, (70, 70)) #Ajustando el tamaño
-    posicionOpcion1 = ventanaSeleccion2.blit(imagenSeleccionadaOpcion1, (280,180)) #Visualizar la imagen con su posición
-    imagenSeleccionadaOpcion2 = pygame.image.load("Imagenes//encendido.png") #Agregando Imagen representativa del botón seleccionado
-    imagenSeleccionadaOpcion2 = pygame.transform.scale(imagenSeleccionadaOpcion2, (70, 70)) #Ajustando el tamaño
-    posicionOpcion2 = ventanaSeleccion2.blit(imagenSeleccionadaOpcion2, (540,180)) #Visualizar la imagen con su posición
-    imagenSeleccionadaOpcion3 = pygame.image.load("Imagenes//encendido.png") #Agregando Imagen representativa del botón seleccionado
-    imagenSeleccionadaOpcion3 = pygame.transform.scale(imagenSeleccionadaOpcion3, (70, 70)) #Ajustando el tamaño
-    posicionOpcion3 = ventanaSeleccion2.blit(imagenSeleccionadaOpcion3, (800,180)) #Visualizar la imagen con su posición
+    imagenSeleccionadaOpcion1 = pygame.image.load("Imagenes//encendido.png")  # Agregando Imagen representativa del botón seleccionado
+    imagenSeleccionadaOpcion1 = pygame.transform.scale(imagenSeleccionadaOpcion1, (70, 70))  # Ajustando el tamaño
+    posicionOpcion1 = ventanaSeleccion2.blit(imagenSeleccionadaOpcion1, (280, 180))  # Visualizar la imagen con su posición
+    imagenSeleccionadaOpcion2 = pygame.image.load("Imagenes//encendido.png")  # Agregando Imagen representativa del botón seleccionado
+    imagenSeleccionadaOpcion2 = pygame.transform.scale(imagenSeleccionadaOpcion2, (70, 70))  # Ajustando el tamaño
+    posicionOpcion2 = ventanaSeleccion2.blit(imagenSeleccionadaOpcion2, (540, 180))  # Visualizar la imagen con su posición
+    imagenSeleccionadaOpcion3 = pygame.image.load("Imagenes//encendido.png")  # Agregando Imagen representativa del botón seleccionado
+    imagenSeleccionadaOpcion3 = pygame.transform.scale(imagenSeleccionadaOpcion3, (70, 70))  # Ajustando el tamaño
+    posicionOpcion3 = ventanaSeleccion2.blit(imagenSeleccionadaOpcion3, (800, 180))  # Visualizar la imagen con su posición
     # ---- Imágenes No Seleccionadas ----
-    imagenNoSeleccionadaOpcion1 = pygame.image.load("Imagenes//apagado.png") #Agregando Imagen representativa del botón no seleccionado
-    imagenNoSeleccionadaOpcion1 = pygame.transform.scale(imagenNoSeleccionadaOpcion1, (70, 70)) #Ajustando el tamaño
-    posicionOpcion1 = ventanaSeleccion2.blit(imagenNoSeleccionadaOpcion1, (280,180)) #Visualizar la imagen con su posición
-    imagenNoSeleccionadaOpcion2 = pygame.image.load("Imagenes//apagado.png") #Agregando Imagen representativa del botón no seleccionado
-    imagenNoSeleccionadaOpcion2 = pygame.transform.scale(imagenNoSeleccionadaOpcion2, (70, 70)) #Ajustando el tamaño
-    posicionOpcion2 = ventanaSeleccion2.blit(imagenNoSeleccionadaOpcion2, (540,180)) #Visualizar la imagen con su posición
-    imagenNoSeleccionadaOpcion3 = pygame.image.load("Imagenes//apagado.png") #Agregando Imagen representativa del botón no seleccionado
-    imagenNoSeleccionadaOpcion3 = pygame.transform.scale(imagenNoSeleccionadaOpcion3, (70, 70)) #Ajustando el tamaño
-    posicionOpcion3 = ventanaSeleccion2.blit(imagenNoSeleccionadaOpcion3, (800,180)) #Visualizar la imagen con su posición
+    imagenNoSeleccionadaOpcion1 = pygame.image.load("Imagenes//apagado.png")  # Agregando Imagen representativa del botón no seleccionado
+    imagenNoSeleccionadaOpcion1 = pygame.transform.scale(imagenNoSeleccionadaOpcion1, (70, 70))  # Ajustando el tamaño
+    posicionOpcion1 = ventanaSeleccion2.blit(imagenNoSeleccionadaOpcion1, (280, 180))  # Visualizar la imagen con su posición
+    imagenNoSeleccionadaOpcion2 = pygame.image.load("Imagenes//apagado.png")  # Agregando Imagen representativa del botón no seleccionado
+    imagenNoSeleccionadaOpcion2 = pygame.transform.scale(imagenNoSeleccionadaOpcion2, (70, 70))  # Ajustando el tamaño
+    posicionOpcion2 = ventanaSeleccion2.blit(imagenNoSeleccionadaOpcion2, (540, 180))  # Visualizar la imagen con su posición
+    imagenNoSeleccionadaOpcion3 = pygame.image.load("Imagenes//apagado.png")  # Agregando Imagen representativa del botón no seleccionado
+    imagenNoSeleccionadaOpcion3 = pygame.transform.scale(imagenNoSeleccionadaOpcion3, (70, 70))  # Ajustando el tamaño
+    posicionOpcion3 = ventanaSeleccion2.blit(imagenNoSeleccionadaOpcion3, (800, 180))  # Visualizar la imagen con su posición
     # ---- Imágen de los porteros ----
-    imagenKane = pygame.image.load("Imagenes//Claudio Bravo.png") #Agregando imagen de Bravo
-    imagenKane = pygame.transform.scale(imagenKane, (180, 175)) #Ajustando el tamaño
-    ventanaSeleccion2.blit(imagenKane, (100,432)) #Visualizar la imagen con su posición
-    imagenMuller = pygame.image.load("Imagenes//IñakiPeña.png") #Agregando imagen de Peña
-    imagenMuller = pygame.transform.scale(imagenMuller, (180, 175)) #Ajustando el tamaño
-    ventanaSeleccion2.blit(imagenMuller, (360,432)) #Visualizar la imagen con su posición
-    imagenMusiala = pygame.image.load("Imagenes//Stegen.png") #Agregando imagen de Stegen
-    imagenMusiala = pygame.transform.scale(imagenMusiala, (180, 175)) #Ajustando el tamaño
-    ventanaSeleccion2.blit(imagenMusiala, (615,432)) #Visualizar la imagen con su posición
+    imagenKane = pygame.image.load("Imagenes//Claudio Bravo.png")  # Agregando imagen de Bravo
+    imagenKane = pygame.transform.scale(imagenKane, (180, 175))  # Ajustando el tamaño
+    ventanaSeleccion2.blit(imagenKane, (100, 432))  # Visualizar la imagen con su posición
+    imagenMuller = pygame.image.load("Imagenes//IñakiPeña.png")  # Agregando imagen de Peña
+    imagenMuller = pygame.transform.scale(imagenMuller, (180, 175))  # Ajustando el tamaño
+    ventanaSeleccion2.blit(imagenMuller, (360, 432))  # Visualizar la imagen con su posición
+    imagenMusiala = pygame.image.load("Imagenes//Stegen.png")  # Agregando imagen de Stegen
+    imagenMusiala = pygame.transform.scale(imagenMusiala, (180, 175))  # Ajustando el tamaño
+    ventanaSeleccion2.blit(imagenMusiala, (615, 432))  # Visualizar la imagen con su posición
     # ---- Imágen de los botones de selección porteros----
     # ---- Imágenes Seleccionadas ----
-    imagenSeleccionada1 = pygame.image.load("Imagenes//encendido.png") #Agregando Imagen representativa del botón seleccionado
-    imagenSeleccionada1 = pygame.transform.scale(imagenSeleccionada1, (70, 70)) #Ajustando el tamaño
-    posicionOpcion1Por = ventanaSeleccion2.blit(imagenSeleccionada1, (280,482)) #Visualizar la imagen con su posición
-    imagenSeleccionada2 = pygame.image.load("Imagenes//encendido.png") #Agregando Imagen representativa del botón seleccionado
-    imagenSeleccionada2 = pygame.transform.scale(imagenSeleccionada2, (70, 70)) #Ajustando el tamaño
-    posicionOpcion2Por = ventanaSeleccion2.blit(imagenSeleccionada2, (540,482)) #Visualizar la imagen con su posición
-    imagenSeleccionada3 = pygame.image.load("Imagenes//encendido.png") #Agregando Imagen representativa del botón seleccionado
-    imagenSeleccionada3 = pygame.transform.scale(imagenSeleccionada3, (70, 70)) #Ajustando el tamaño
-    posicionOpcion3Por = ventanaSeleccion2.blit(imagenSeleccionada3, (800,482)) #Visualizar la imagen con su posición
+    imagenSeleccionada1 = pygame.image.load("Imagenes//encendido.png")  # Agregando Imagen representativa del botón seleccionado
+    imagenSeleccionada1 = pygame.transform.scale(imagenSeleccionada1, (70, 70))  # Ajustando el tamaño
+    posicionOpcion1Por = ventanaSeleccion2.blit(imagenSeleccionada1, (280, 482))  # Visualizar la imagen con su posición
+    imagenSeleccionada2 = pygame.image.load("Imagenes//encendido.png")  # Agregando Imagen representativa del botón seleccionado
+    imagenSeleccionada2 = pygame.transform.scale(imagenSeleccionada2, (70, 70))  # Ajustando el tamaño
+    posicionOpcion2Por = ventanaSeleccion2.blit(imagenSeleccionada2, (540, 482))  # Visualizar la imagen con su posición
+    imagenSeleccionada3 = pygame.image.load("Imagenes//encendido.png")  # Agregando Imagen representativa del botón seleccionado
+    imagenSeleccionada3 = pygame.transform.scale(imagenSeleccionada3, (70, 70))  # Ajustando el tamaño
+    posicionOpcion3Por = ventanaSeleccion2.blit(imagenSeleccionada3, (800, 482))  # Visualizar la imagen con su posición
     # ---- Imágenes No Seleccionadas ----
-    imagenSeleccionada1 = pygame.image.load("Imagenes//apagado.png") #Agregando Imagen representativa del botón seleccionado
-    imagenSeleccionada1 = pygame.transform.scale(imagenSeleccionada1, (70, 70)) #Ajustando el tamaño
-    posicionOpcion1Por = ventanaSeleccion2.blit(imagenSeleccionada1, (280,482)) #Visualizar la imagen con su posición
-    imagenSeleccionada2 = pygame.image.load("Imagenes//apagado.png") #Agregando Imagen representativa del botón seleccionado
-    imagenSeleccionada2 = pygame.transform.scale(imagenSeleccionada2, (70, 70)) #Ajustando el tamaño
-    posicionOpcion2Por = ventanaSeleccion2.blit(imagenSeleccionada2, (540,482)) #Visualizar la imagen con su posición
-    imagenSeleccionada3 = pygame.image.load("Imagenes//apagado.png") #Agregando Imagen representativa del botón seleccionado
-    imagenSeleccionada3 = pygame.transform.scale(imagenSeleccionada3, (70, 70)) #Ajustando el tamaño
-    posicionOpcion3Por = ventanaSeleccion2.blit(imagenSeleccionada3, (800,482)) #Visualizar la imagen con su posición
+    imagenSeleccionada1 = pygame.image.load("Imagenes//apagado.png")  # Agregando Imagen representativa del botón seleccionado
+    imagenSeleccionada1 = pygame.transform.scale(imagenSeleccionada1, (70, 70))  # Ajustando el tamaño
+    posicionOpcion1Por = ventanaSeleccion2.blit(imagenSeleccionada1, (280, 482))  # Visualizar la imagen con su posición
+    imagenSeleccionada2 = pygame.image.load("Imagenes//apagado.png")  # Agregando Imagen representativa del botón seleccionado
+    imagenSeleccionada2 = pygame.transform.scale(imagenSeleccionada2, (70, 70))  # Ajustando el tamaño
+    posicionOpcion2Por = ventanaSeleccion2.blit(imagenSeleccionada2, (540, 482))  # Visualizar la imagen con su posición
+    imagenSeleccionada3 = pygame.image.load("Imagenes//apagado.png")  # Agregando Imagen representativa del botón seleccionado
+    imagenSeleccionada3 = pygame.transform.scale(imagenSeleccionada3, (70, 70))  # Ajustando el tamaño
+    posicionOpcion3Por = ventanaSeleccion2.blit(imagenSeleccionada3, (800, 482))  # Visualizar la imagen con su posición
     # ---- Estableciendo el estado inicial de selección donde todas están apagadas (no seleccionadas) ----
     opcion1SeleccionadaJugadores = False
     opcion2SeleccionadaJugadores = False
@@ -384,49 +389,50 @@ def screenSeleccion2():
     opcion3SeleccionadaPorteros = False
     # ---- Bucle de la ventana de Selección 3 ----
     while True:
-        for event in pygame.event.get(): #Iterando sobre eventos
-            if (event.type == pygame.QUIT): #Si usuario intenta cerrar ventana:
-                return #Cerrar juego
-            elif (event.type == pygame.MOUSEBUTTONDOWN): #Detectar clic del mouse
-                if (event.button == 1): #Verificar si fue clic izquierdo
-                    x, y = event.pos #Guardando en variables donde se hizo clic
+        for event in pygame.event.get():  # Iterando sobre eventos
+            if event.type == pygame.QUIT:  # Si usuario intenta cerrar ventana:
+                return  # Cerrar juego
+            elif event.type == pygame.MOUSEBUTTONDOWN:  # Detectar clic del mouse
+                if event.button == 1:  # Verificar si fue clic izquierdo
+                    x, y = event.pos  # Guardando en variables donde se hizo clic
                     # ---- Verificar si el clic fue dentro de alguno de los botones de la Ventana de Información ----
-                    if (15 < x < 65 and 15 < y < 65): #Botón de Regreso
+                    if 15 < x < 65 and 15 < y < 65:  # Botón de Regreso
                         enSeleccionEquipo = False
-                        screenConfiguracion() #Ir a ventana principal
-                    elif (posicionOpcion1.collidepoint(event.pos)): #Verificar si se presionó el botón de la opción 1
-                        opcion1SeleccionadaJugadores = True #Encendido
-                        opcion2SeleccionadaJugadores = False #Apagado
-                        opcion3SeleccionadaJugadores = False #Apagado
-                    elif (posicionOpcion2.collidepoint(event.pos)): #Verificar si se presionó el botón de la opción 2
-                        opcion1SeleccionadaJugadores = False #Apagado
-                        opcion2SeleccionadaJugadores = True #Encendido
-                        opcion3SeleccionadaJugadores = False #Apagado
-                    elif (posicionOpcion3.collidepoint(event.pos)): #Verificar si se presionó el botón de la opción 3
-                        opcion1SeleccionadaJugadores = False #Apagado
-                        opcion2SeleccionadaJugadores = False #Apagado
-                        opcion3SeleccionadaJugadores = True #Encendido
-                    elif (posicionOpcion1Por.collidepoint(event.pos)): #Verificar si se presionó el botón de la opción 3
-                        opcion1SeleccionadaPorteros = True #Encendido
-                        opcion2SeleccionadaPorteros = False #Apagado
-                        opcion3SeleccionadaPorteros = False #Apagado
-                    elif (posicionOpcion2Por.collidepoint(event.pos)): #Verificar si se presionó el botón de la opción 3
-                        opcion1SeleccionadaPorteros = False #Apagado
-                        opcion2SeleccionadaPorteros = True #Encendido
-                        opcion3SeleccionadaPorteros = False #Apagado
-                    elif (posicionOpcion3Por.collidepoint(event.pos)): #Verificar si se presionó el botón de la opción 3
-                        opcion1SeleccionadaPorteros = False #Apagado
-                        opcion2SeleccionadaPorteros = False #Apagado
-                        opcion3SeleccionadaPorteros = True #Encendido
-            # ---- Dibujando los botones con la apariencia correspondiente a su estado de selección ----
-            ventanaSeleccion2.blit(imagenSeleccionadaOpcion1 if opcion1SeleccionadaJugadores else imagenNoSeleccionadaOpcion1, posicionOpcion1)
-            ventanaSeleccion2.blit(imagenSeleccionadaOpcion2 if opcion2SeleccionadaJugadores else imagenNoSeleccionadaOpcion2, posicionOpcion2)
-            ventanaSeleccion2.blit(imagenSeleccionadaOpcion3 if opcion3SeleccionadaJugadores else imagenNoSeleccionadaOpcion3, posicionOpcion3)
-            # ---- Dibujando los botones con la apariencia correspondiente a su estado de selección ----
-            ventanaSeleccion2.blit(imagenSeleccionadaOpcion1 if opcion1SeleccionadaPorteros else imagenNoSeleccionadaOpcion1, posicionOpcion1Por)
-            ventanaSeleccion2.blit(imagenSeleccionadaOpcion2 if opcion2SeleccionadaPorteros else imagenNoSeleccionadaOpcion2, posicionOpcion2Por)
-            ventanaSeleccion2.blit(imagenSeleccionadaOpcion3 if opcion3SeleccionadaPorteros else imagenNoSeleccionadaOpcion3, posicionOpcion3Por)
-        pygame.display.flip() #Actualizar Pantalla
+                        screenConfiguracion()  # Ir a ventana principal
+                    elif posicionOpcion1.collidepoint(event.pos):  # Verificar si se presionó el botón de la opción 1
+                        opcion1SeleccionadaJugadores = True  # Encendido
+                        opcion2SeleccionadaJugadores = False  # Apagado
+                        opcion3SeleccionadaJugadores = False  # Apagado
+                    elif posicionOpcion2.collidepoint(event.pos):  # Verificar si se presionó el botón de la opción 2
+                        opcion1SeleccionadaJugadores = False  # Apagado
+                        opcion2SeleccionadaJugadores = True  # Encendido
+                        opcion3SeleccionadaJugadores = False  # Apagado
+                    elif posicionOpcion3.collidepoint(event.pos):  # Verificar si se presionó el botón de la opción 3
+                        opcion1SeleccionadaJugadores = False  # Apagado
+                        opcion2SeleccionadaJugadores = False  # Apagado
+                        opcion3SeleccionadaJugadores = True  # Encendido
+                    elif posicionOpcion1Por.collidepoint(event.pos):  # Verificar si se presionó el botón de la opción 3
+                        opcion1SeleccionadaPorteros = True  # Encendido
+                        opcion2SeleccionadaPorteros = False  # Apagado
+                        opcion3SeleccionadaPorteros = False  # Apagado
+                    elif posicionOpcion2Por.collidepoint(event.pos):  # Verificar si se presionó el botón de la opción 3
+                        opcion1SeleccionadaPorteros = False  # Apagado
+                        opcion2SeleccionadaPorteros = True  # Encendido
+                        opcion3SeleccionadaPorteros = False  # Apagado
+                    elif posicionOpcion3Por.collidepoint(event.pos):  # Verificar si se presionó el botón de la opción 3
+                        opcion1SeleccionadaPorteros = False  # Apagado
+                        opcion2SeleccionadaPorteros = False  # Apagado
+                        opcion3SeleccionadaPorteros = True  # Encendido
+        # ---- Dibujando los botones con la apariencia correspondiente a su estado de selección ----
+        ventanaSeleccion2.blit(imagenSeleccionadaOpcion1 if opcion1SeleccionadaJugadores else imagenNoSeleccionadaOpcion1, posicionOpcion1)
+        ventanaSeleccion2.blit(imagenSeleccionadaOpcion2 if opcion2SeleccionadaJugadores else imagenNoSeleccionadaOpcion2, posicionOpcion2)
+        ventanaSeleccion2.blit(imagenSeleccionadaOpcion3 if opcion3SeleccionadaJugadores else imagenNoSeleccionadaOpcion3, posicionOpcion3)
+        # ---- Dibujando los botones con la apariencia correspondiente a su estado de selección ----
+        ventanaSeleccion2.blit(imagenSeleccionadaOpcion1 if opcion1SeleccionadaPorteros else imagenNoSeleccionadaOpcion1, posicionOpcion1Por)
+        ventanaSeleccion2.blit(imagenSeleccionadaOpcion2 if opcion2SeleccionadaPorteros else imagenNoSeleccionadaOpcion2, posicionOpcion2Por)
+        ventanaSeleccion2.blit(imagenSeleccionadaOpcion3 if opcion3SeleccionadaPorteros else imagenNoSeleccionadaOpcion3, posicionOpcion3Por)
+        pygame.display.flip()  # Actualizar Pantalla
+
 # ----------------------------------- Finalizando la Ventana de Selección 2 ---------------------------------
 
 # ----------------------------------- Iniciando la Ventana de Selección 3 -----------------------------------
@@ -557,10 +563,159 @@ def screenSeleccion3():
 # ----------------------------------- Finalizando la Ventana de Selección 3 ---------------------------------
 
 # ----------------------------------- Iniciando la Ventana de Juego -----------------------------------
+imagen_equipo = None
+imagen_equipo_contrario = None
+resultado_opuesto = None
+
+
+def equiposelec(resultado_moneda):
+    global imagen_equipo, imagen_equipo_contrario, resultado_opuesto
+    if equipo == 1:
+        imagen_equipo = pygame.image.load("Imagenes//Argentina.png")
+        imagen_equipo_contrario = pygame.image.load("Imagenes//Bayern.png")
+    elif equipo == 3:
+        imagen_equipo = pygame.image.load("Imagenes//Barcelona.png")
+        imagen_equipo_contrario = pygame.image.load("Imagenes//Argentina.png")
+    else:
+        imagen_equipo = pygame.image.load("Imagenes//Bayern.png")
+        imagen_equipo_contrario = pygame.image.load("Imagenes//Barcelona.png")
+
+    if resultado_moneda == "Local":
+        resultado_opuesto = "Visitante"
+    else:
+        resultado_opuesto = "Local"
+
 def screenJuego():
-    pygame.mixer.music.set_volume(volumenGlobal) #Manteniendo el volumen
-    ventanaInformacion = pygame.display.set_mode(sizeScreen) #Creación de Ventana
-    ventanaInformacion.fill("#FFC154") #Color de fondo
+    global imagen_equipo, imagen_equipo_contrario, resultado_opuesto
+
+    pygame.mixer.music.set_volume(volumenGlobal)  # Manteniendo el volumen
+
+    # Creando la ventana
+    ventanaJuego = pygame.display.set_mode(sizeScreen)
+    pygame.display.set_caption("Sorteo")
+
+    # Definir tamaño
+    ANCHO = 800
+    ALTO = 600
+
+    # Cargar imagen de la moneda
+    imagen_moneda = pygame.image.load("Imagenes//Moneda.png")
+    imagen_moneda = pygame.transform.scale(imagen_moneda, (400, 400))  # Ajustando el tamaño
+
+    # Cargar la imagen del botón
+    imagen_boton = pygame.image.load("Imagenes//Confirmar.png")
+    imagen_boton = pygame.transform.scale(imagen_boton, (80, 80))
+    boton_rect = imagen_boton.get_rect()
+    boton_rect.center = (sizeScreen[0] // 2, sizeScreen[1] // 1.2)
+
+    # Definir la clase Moneda
+    class Moneda(pygame.sprite.Sprite):
+        def __init__(self):
+            super().__init__()
+            self.image = imagen_moneda
+            self.rect = self.image.get_rect()
+            self.rect.center = (ANCHO // 2, ALTO // 2)
+            self.velocidad_rotacion = random.randint(3, 3)
+            self.angulo = 0
+            self.lanzada = False
+            self.resultado = None
+
+        def update(self):
+            if self.lanzada:
+                if self.angulo % 360 < 90 or self.angulo % 360 > 270:
+                    self.resultado = "Local"
+                    equiposelec(self.resultado)
+                else:
+                    self.resultado = "Visitante"
+                    equiposelec(self.resultado)
+            else:
+                self.angulo += self.velocidad_rotacion
+                self.image = pygame.transform.rotate(imagen_moneda, self.angulo)
+                self.rect = self.image.get_rect(center=self.rect.center)
+
+        def lanzar(self):
+            self.lanzada = True
+
+    # Crear grupo de sprites y agregar la moneda
+    todos_los_sprites = pygame.sprite.Group()
+    moneda = Moneda()
+    todos_los_sprites.add(moneda)
+
+    # Bucle principal del juego
+    ejecutando = True
+    reloj = pygame.time.Clock()
+
+    # Nuevas variables para la posición y el tamaño de la imagen del equipo
+    x_equipo = 50  # Nueva posición X de la imagen del equipo
+    y_equipo = 50  # Nueva posición Y de la imagen del equipo
+    ancho_equipo = 200  # Nuevo ancho de la imagen del equipo
+    alto_equipo = 200  # Nuevo alto de la imagen del equipo
+
+    x_equipo_contrario = 650  # Posición X de la imagen del equipo contrario
+    y_equipo_contrario = 50  # Posición Y de la imagen del equipo contrario
+    y_texto_contrario = y_equipo_contrario + alto_equipo + 10  # Posición Y del texto del equipo contrario
+
+    while ejecutando:
+        for evento in pygame.event.get():
+            if evento.type == pygame.QUIT:
+                ejecutando = False
+            elif evento.type == pygame.KEYDOWN:
+                if evento.key == pygame.K_SPACE and not moneda.lanzada:
+                    moneda.lanzar()
+            elif evento.type == pygame.MOUSEBUTTONDOWN:
+                if boton_rect.collidepoint(evento.pos):  # Verificar si se hizo clic dentro del área del botón
+                    mostrar_seleccion_final()
+
+        # Actualizar la animación de la moneda
+        todos_los_sprites.update()
+
+        # Dibujar todo
+        ventanaJuego.fill((255, 255, 255))
+
+        # Dibujar la imagen del equipo en la nueva posición y tamaño
+        if imagen_equipo:
+            imagen_equipo_escalada = pygame.transform.scale(imagen_equipo, (ancho_equipo, alto_equipo))
+            ventanaJuego.blit(imagen_equipo_escalada, (x_equipo, y_equipo))
+
+        # Dibujar la imagen del equipo contrario
+        if imagen_equipo_contrario:
+            imagen_equipo_contrario_escalada = pygame.transform.scale(imagen_equipo_contrario,
+                                                                      (ancho_equipo, alto_equipo))
+            ventanaJuego.blit(imagen_equipo_contrario_escalada, (x_equipo_contrario, y_equipo_contrario))
+
+        # Mostrar resultado opuesto debajo del equipo contrario
+        if resultado_opuesto:
+            fuente = pygame.font.Font(None, 24)
+            texto_contrario = fuente.render(resultado_opuesto, True, ("#000000"))
+            ventanaJuego.blit(texto_contrario, (
+            x_equipo_contrario + ancho_equipo // 2 - texto_contrario.get_width() // 2, y_texto_contrario))
+
+        todos_los_sprites.draw(ventanaJuego)
+
+        # Mostrar resultado después de que la moneda haya aterrizado
+        if moneda.lanzada and moneda.resultado is not None:
+            fuente = pygame.font.Font(None, 28)
+            texto = fuente.render(f"{moneda.resultado}", True, ("#000000"))
+            ventanaJuego.blit(texto, (103,250))
+
+        # Dibujar la imagen del botón en la posición definida
+        ventanaJuego.blit(imagen_boton, boton_rect)
+
+        pygame.display.flip()
+        reloj.tick(60)
+
+def mostrar_seleccion_final():
+    ventana_seleccionfinal = pygame.display.set_mode((sizeScreen))
+    pygame.display.set_caption("Selección Final")
+
+    ejecutando_seleccionfinal = True
+
+    while ejecutando_seleccionfinal:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                ejecutando_seleccionfinal = False
+
+        ventana_seleccionfinal.fill((255, 255, 255))
 # ----------------------------------- Finalizando la Ventana de Juego ---------------------------------
 
 # ----------------------------------- Iniciando la Ventana de Principal -----------------------------------
