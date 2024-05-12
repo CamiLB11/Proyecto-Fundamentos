@@ -1,0 +1,43 @@
+Proyecto Fundamentos
+
+Descripción
+Maqueta para lanzar penales.
+
+Características principales
+Interfaz Gráfica: Desarrollado con Pygame para una experiencia visual interactiva.
+Personalización: Los usuarios pueden personalizar su experiencia de juego.
+Música de Fondo: Integración de música de fondo para una experiencia de juego más inmersiva.
+
+
+Versión Python 
+
+Características principales
+
+1. Librería estándar:
+    - Nuevas características en varias bibliotecas de la librería estándar.
+    - Se agregó el módulo pathlib para proporcionar una API orientada a objetos para manejar rutas de archivos.
+
+2. Unificaciones y mejoras:
+    - Mejoras en el soporte de Unicode y cadenas de texto.
+    - Se añadieron varias funciones y métodos a diferentes clases para mejorar la compatibilidad y la facilidad de uso.
+
+3. Módulo enum:
+    - Se agregó un nuevo módulo enum que proporciona una manera de definir enumeraciones.
+
+4. Mejoras en el manejador de excepciones:
+    - Se introdujeron mejoras para manejar excepciones, incluyendo un nuevo sintaxis para manejar múltiples excepciones.
+
+5. Módulo asyncio:
+    - Introducción del módulo asyncio que ofrece soporte para programación asíncrona utilizando async y await.
+
+Actualizar a Python 3.4:
+
+1. *Realiza una copia de seguridad* de tus proyectos y entornos virtuales actuales.
+2. *Descarga* Python 3.4 desde el [sitio web oficial de Python](https://www.python.org/downloads/release/python-340/).
+3. *Instala* la versión descargada de Python 3.4.
+4. *Verifica* tu instalación ejecutando python3 --version en la línea de comandos.
+
+Más información sobre Python 3.4:
+- [Notas de la versión oficial de Python 3.4](https://docs.python.org/3/whatsnew/3.4.html)
+- [Documentación oficial de Python](https://docs.python.org/3/)
+- [Guía de actualización de Python 2 a 3](https://docs.python.org/3/howto/pyporting.html)
