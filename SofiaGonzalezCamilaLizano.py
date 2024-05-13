@@ -1,8 +1,9 @@
 import random
 import sys
-import time
 from time import sleep
+
 import pygame
+import pygame.time
 from pygame import *
 
 pygame.init() #Iniciando la libreria
@@ -184,6 +185,8 @@ def screenConfiguracion():
 jugadores = 1
 porteros = 1
 def screenSeleccion1():
+        global opcion1SeleccionadaJugadoresArgentina, opcion2SeleccionadaJugadoresArgentina, opcion3SeleccionadaJugadoresArgentina
+        global opcion1SeleccionadaPorterosArgentina, opcion2SeleccionadaPorterosArgentina, opcion3SeleccionadaPorterosArgentina
         global enSeleccionEquipo #Globalizando mi variable para saber si estoy en ventanas de selección de jugadores
         global jugadores, porteros
         pygame.mixer.music.set_volume(volumenGlobal) #Manteniendo el volumen
@@ -201,9 +204,9 @@ def screenSeleccion1():
         imagenMessi = pygame.image.load("Imagenes//messi.png") #Agregando imagen de Messi
         imagenMessi = pygame.transform.scale(imagenMessi, (180, 175)) #Ajustando el tamaño
         ventanaSeleccion1.blit(imagenMessi, (360,130)) #Visualizar la imagen con su posición
-        imagenMusiala = pygame.image.load("Imagenes//dybala.png") #Agregando imagen de Dybala
-        imagenMusiala = pygame.transform.scale(imagenMusiala, (180, 175)) #Ajustando el tamaño
-        ventanaSeleccion1.blit(imagenMusiala, (615,130)) #Visualizar la imagen con su posición
+        imagenDybala = pygame.image.load("Imagenes//dybala.png") #Agregando imagen de Dybala
+        imagenDybala = pygame.transform.scale(imagenDybala, (180, 175)) #Ajustando el tamaño
+        ventanaSeleccion1.blit(imagenDybala, (615,130)) #Visualizar la imagen con su posición
         # ---- Imágen de los botones de selección jugadores----
         # ---- Imágenes Seleccionadas ----
         jugadores = 1
@@ -229,15 +232,15 @@ def screenSeleccion1():
         imagenNoSeleccionadaOpcion3 = pygame.transform.scale(imagenNoSeleccionadaOpcion3, (70, 70)) #Ajustando el tamaño
         posicionOpcion3 = ventanaSeleccion1.blit(imagenNoSeleccionadaOpcion3, (800,180)) #Visualizar la imagen con su posición
         # ---- Imágen de los porteros ----
-        imagenKane = pygame.image.load("Imagenes//Emiliano Martínez.png") #Agregando imagen de Martínez
-        imagenKane = pygame.transform.scale(imagenKane, (180, 175)) #Ajustando el tamaño
-        ventanaSeleccion1.blit(imagenKane, (100,432)) #Visualizar la imagen con su posición
-        imagenMuller = pygame.image.load("Imagenes//Gerónimo Rulli.png") #Agregando imagen de Rulli
-        imagenMuller = pygame.transform.scale(imagenMuller, (180, 175)) #Ajustando el tamaño
-        ventanaSeleccion1.blit(imagenMuller, (360,432)) #Visualizar la imagen con su posición
-        imagenMusiala = pygame.image.load("Imagenes//Franco Armani.png") #Agregando imagen de Armani
-        imagenMusiala = pygame.transform.scale(imagenMusiala, (180, 175)) #Ajustando el tamaño
-        ventanaSeleccion1.blit(imagenMusiala, (615,432)) #Visualizar la imagen con su posición
+        imagenMartinez = pygame.image.load("Imagenes//Emiliano Martínez.png") #Agregando imagen de Martínez
+        imagenMartinez = pygame.transform.scale(imagenMartinez, (180, 175)) #Ajustando el tamaño
+        ventanaSeleccion1.blit(imagenMartinez, (100,432)) #Visualizar la imagen con su posición
+        imagenRulli = pygame.image.load("Imagenes//Gerónimo Rulli.png") #Agregando imagen de Rulli
+        imagenRulli = pygame.transform.scale(imagenRulli, (180, 175)) #Ajustando el tamaño
+        ventanaSeleccion1.blit(imagenRulli, (360,432)) #Visualizar la imagen con su posición
+        imagenArmani = pygame.image.load("Imagenes//Franco Armani.png") #Agregando imagen de Armani
+        imagenArmani = pygame.transform.scale(imagenArmani, (180, 175)) #Ajustando el tamaño
+        ventanaSeleccion1.blit(imagenArmani, (615,432)) #Visualizar la imagen con su posición
         # ---- Imágen de los botones de selección porteros----
         # ---- Imágenes Seleccionadas ----
         porteros = 1
@@ -263,12 +266,12 @@ def screenSeleccion1():
         imagenSeleccionada3 = pygame.transform.scale(imagenSeleccionada3, (70, 70)) #Ajustando el tamaño
         posicionOpcion3Por = ventanaSeleccion1.blit(imagenSeleccionada3, (800,482)) #Visualizar la imagen con su posición
         # ---- Estableciendo el estado inicial de selección donde todas están apagadas (no seleccionadas) ----
-        opcion1SeleccionadaJugadores = False
-        opcion2SeleccionadaJugadores = False
-        opcion3SeleccionadaJugadores = False
-        opcion1SeleccionadaPorteros = False
-        opcion2SeleccionadaPorteros = False
-        opcion3SeleccionadaPorteros = False
+        opcion1SeleccionadaJugadoresArgentina = False
+        opcion2SeleccionadaJugadoresArgentina = False
+        opcion3SeleccionadaJugadoresArgentina = False
+        opcion1SeleccionadaPorterosArgentina = False
+        opcion2SeleccionadaPorterosArgentina = False
+        opcion3SeleccionadaPorterosArgentina = False
         # ---- Bucle de la ventana de Selección 3 ----
         while True:
             for event in pygame.event.get(): #Iterando sobre eventos
@@ -282,42 +285,44 @@ def screenSeleccion1():
                             enSeleccionEquipo = False
                             screenConfiguracion() #Ir a ventana principal
                         elif (posicionOpcion1.collidepoint(event.pos)): #Verificar si se presionó el botón de la opción 1
-                            opcion1SeleccionadaJugadores = True #Encendido
-                            opcion2SeleccionadaJugadores = False #Apagado
-                            opcion3SeleccionadaJugadores = False #Apagado
+                            opcion1SeleccionadaJugadoresArgentina = True #Encendido
+                            opcion2SeleccionadaJugadoresArgentina = False #Apagado
+                            opcion3SeleccionadaJugadoresArgentina = False #Apagado
                         elif (posicionOpcion2.collidepoint(event.pos)): #Verificar si se presionó el botón de la opción 2
-                            opcion1SeleccionadaJugadores = False #Apagado
-                            opcion2SeleccionadaJugadores = True #Encendido
-                            opcion3SeleccionadaJugadores = False #Apagado
+                            opcion1SeleccionadaJugadoresArgentina = False #Apagado
+                            opcion2SeleccionadaJugadoresArgentina = True #Encendido
+                            opcion3SeleccionadaJugadoresArgentina = False #Apagado
                         elif (posicionOpcion3.collidepoint(event.pos)): #Verificar si se presionó el botón de la opción 3
-                            opcion1SeleccionadaJugadores = False #Apagado
-                            opcion2SeleccionadaJugadores = False #Apagado
-                            opcion3SeleccionadaJugadores = True #Encendido
+                            opcion1SeleccionadaJugadoresArgentina = False #Apagado
+                            opcion2SeleccionadaJugadoresArgentina = False #Apagado
+                            opcion3SeleccionadaJugadoresArgentina = True #Encendido
                         elif (posicionOpcion1Por.collidepoint(event.pos)): #Verificar si se presionó el botón de la opción 3
-                            opcion1SeleccionadaPorteros = True #Encendido
-                            opcion2SeleccionadaPorteros = False #Apagado
-                            opcion3SeleccionadaPorteros = False #Apagado
+                            opcion1SeleccionadaPorterosArgentina = True #Encendido
+                            opcion2SeleccionadaPorterosArgentina = False #Apagado
+                            opcion3SeleccionadaPorterosArgentina = False #Apagado
                         elif (posicionOpcion2Por.collidepoint(event.pos)): #Verificar si se presionó el botón de la opción 3
-                            opcion1SeleccionadaPorteros = False #Apagado
-                            opcion2SeleccionadaPorteros = True #Encendido
-                            opcion3SeleccionadaPorteros = False #Apagado
+                            opcion1SeleccionadaPorterosArgentina = False #Apagado
+                            opcion2SeleccionadaPorterosArgentina = True #Encendido
+                            opcion3SeleccionadaPorterosArgentina = False #Apagado
                         elif (posicionOpcion3Por.collidepoint(event.pos)): #Verificar si se presionó el botón de la opción 3
-                            opcion1SeleccionadaPorteros = False #Apagado
-                            opcion2SeleccionadaPorteros = False #Apagado
-                            opcion3SeleccionadaPorteros = True #Encendido
+                            opcion1SeleccionadaPorterosArgentina = False #Apagado
+                            opcion2SeleccionadaPorterosArgentina = False #Apagado
+                            opcion3SeleccionadaPorterosArgentina = True #Encendido
                 # ---- Dibujando los botones con la apariencia correspondiente a su estado de selección ----
-                ventanaSeleccion1.blit(imagenSeleccionadaOpcion1 if opcion1SeleccionadaJugadores else imagenNoSeleccionadaOpcion1, posicionOpcion1)
-                ventanaSeleccion1.blit(imagenSeleccionadaOpcion2 if opcion2SeleccionadaJugadores else imagenNoSeleccionadaOpcion2, posicionOpcion2)
-                ventanaSeleccion1.blit(imagenSeleccionadaOpcion3 if opcion3SeleccionadaJugadores else imagenNoSeleccionadaOpcion3, posicionOpcion3)
+                ventanaSeleccion1.blit(imagenSeleccionadaOpcion1 if opcion1SeleccionadaJugadoresArgentina else imagenNoSeleccionadaOpcion1, posicionOpcion1)
+                ventanaSeleccion1.blit(imagenSeleccionadaOpcion2 if opcion2SeleccionadaJugadoresArgentina else imagenNoSeleccionadaOpcion2, posicionOpcion2)
+                ventanaSeleccion1.blit(imagenSeleccionadaOpcion3 if opcion3SeleccionadaJugadoresArgentina else imagenNoSeleccionadaOpcion3, posicionOpcion3)
                 # ---- Dibujando los botones con la apariencia correspondiente a su estado de selección ----
-                ventanaSeleccion1.blit(imagenSeleccionadaOpcion1 if opcion1SeleccionadaPorteros else imagenNoSeleccionadaOpcion1, posicionOpcion1Por)
-                ventanaSeleccion1.blit(imagenSeleccionadaOpcion2 if opcion2SeleccionadaPorteros else imagenNoSeleccionadaOpcion2, posicionOpcion2Por)
-                ventanaSeleccion1.blit(imagenSeleccionadaOpcion3 if opcion3SeleccionadaPorteros else imagenNoSeleccionadaOpcion3, posicionOpcion3Por)
+                ventanaSeleccion1.blit(imagenSeleccionadaOpcion1 if opcion1SeleccionadaPorterosArgentina else imagenNoSeleccionadaOpcion1, posicionOpcion1Por)
+                ventanaSeleccion1.blit(imagenSeleccionadaOpcion2 if opcion2SeleccionadaPorterosArgentina else imagenNoSeleccionadaOpcion2, posicionOpcion2Por)
+                ventanaSeleccion1.blit(imagenSeleccionadaOpcion3 if opcion3SeleccionadaPorterosArgentina else imagenNoSeleccionadaOpcion3, posicionOpcion3Por)
             pygame.display.flip() #Actualizar Pantalla
 # ----------------------------------- Finalizando la Ventana de Selección 1 ---------------------------------
 
 # ----------------------------------- Iniciando la Ventana de Selección 2 -----------------------------------
 def screenSeleccion2():
+    global opcion1SeleccionadaJugadoresBarcelona, opcion2SeleccionadaJugadoresBarcelona, opcion3SeleccionadaJugadoresBarcelona
+    global opcion1SeleccionadaPorterosBarcelona, opcion2SeleccionadaPorterosBarcelona, opcion3SeleccionadaPorterosBarcelona
     global enSeleccionEquipo  # Globalizando mi variable para saber si estoy en ventanas de selección de jugadores
     global jugadores,porteros
     pygame.mixer.music.set_volume(volumenGlobal)  # Manteniendo el volumen
@@ -329,15 +334,15 @@ def screenSeleccion2():
     botonRegreso = pygame.transform.scale(botonRegreso, (45, 45))  # Ajustando el tamaño
     ventanaSeleccion2.blit(botonRegreso, (10, 10))  # Visualizar la imagen con su posición
     # ---- Imágen de los jugadores ----
-    imagenKane = pygame.image.load("Imagenes//Raphinha.png")  # Agregando imagen de Raphinha
-    imagenKane = pygame.transform.scale(imagenKane, (180, 175))  # Ajustando el tamaño
-    ventanaSeleccion2.blit(imagenKane, (100, 130))  # Visualizar la imagen con su posición
-    imagenMuller = pygame.image.load("Imagenes//RobertLewandowski.png")  # Agregando imagen de Lewandowski
-    imagenMuller = pygame.transform.scale(imagenMuller, (180, 175))  # Ajustando el tamaño
-    ventanaSeleccion2.blit(imagenMuller, (360, 130))  # Visualizar la imagen con su posición
-    imagenMusiala = pygame.image.load("Imagenes//FerranTorres.png")  # Agregando imagen de Torres
-    imagenMusiala = pygame.transform.scale(imagenMusiala, (180, 175))  # Ajustando el tamaño
-    ventanaSeleccion2.blit(imagenMusiala, (615, 130))  # Visualizar la imagen con su posición
+    imagenRaphinha = pygame.image.load("Imagenes//Raphinha.png")  # Agregando imagen de Raphinha
+    imagenRaphinha = pygame.transform.scale(imagenRaphinha, (180, 175))  # Ajustando el tamaño
+    ventanaSeleccion2.blit(imagenRaphinha, (100, 130))  # Visualizar la imagen con su posición
+    imagenRobertLewandowski = pygame.image.load("Imagenes//RobertLewandowski.png")  # Agregando imagen de Lewandowski
+    imagenRobertLewandowski = pygame.transform.scale(imagenRobertLewandowski, (180, 175))  # Ajustando el tamaño
+    ventanaSeleccion2.blit(imagenRobertLewandowski, (360, 130))  # Visualizar la imagen con su posición
+    imagenFerranTorres = pygame.image.load("Imagenes//FerranTorres.png")  # Agregando imagen de Torres
+    imagenFerranTorres = pygame.transform.scale(imagenFerranTorres, (180, 175))  # Ajustando el tamaño
+    ventanaSeleccion2.blit(imagenFerranTorres, (615, 130))  # Visualizar la imagen con su posición
     # ---- Imágen de los botones de selección jugadores----
     # ---- Imágenes Seleccionadas ----
     jugadores = 4
@@ -363,15 +368,15 @@ def screenSeleccion2():
     imagenNoSeleccionadaOpcion3 = pygame.transform.scale(imagenNoSeleccionadaOpcion3, (70, 70))  # Ajustando el tamaño
     posicionOpcion3 = ventanaSeleccion2.blit(imagenNoSeleccionadaOpcion3, (800, 180))  # Visualizar la imagen con su posición
     # ---- Imágen de los porteros ----
-    imagenKane = pygame.image.load("Imagenes//Claudio Bravo.png")  # Agregando imagen de Bravo
-    imagenKane = pygame.transform.scale(imagenKane, (180, 175))  # Ajustando el tamaño
-    ventanaSeleccion2.blit(imagenKane, (100, 432))  # Visualizar la imagen con su posición
-    imagenMuller = pygame.image.load("Imagenes//IñakiPeña.png")  # Agregando imagen de Peña
-    imagenMuller = pygame.transform.scale(imagenMuller, (180, 175))  # Ajustando el tamaño
-    ventanaSeleccion2.blit(imagenMuller, (360, 432))  # Visualizar la imagen con su posición
-    imagenMusiala = pygame.image.load("Imagenes//Stegen.png")  # Agregando imagen de Stegen
-    imagenMusiala = pygame.transform.scale(imagenMusiala, (180, 175))  # Ajustando el tamaño
-    ventanaSeleccion2.blit(imagenMusiala, (615, 432))  # Visualizar la imagen con su posición
+    imagenBravo = pygame.image.load("Imagenes//Claudio Bravo.png")  # Agregando imagen de Bravo
+    imagenBravo = pygame.transform.scale(imagenBravo, (180, 175))  # Ajustando el tamaño
+    ventanaSeleccion2.blit(imagenBravo, (100, 432))  # Visualizar la imagen con su posición
+    imagenPeña = pygame.image.load("Imagenes//IñakiPeña.png")  # Agregando imagen de Peña
+    imagenPeña = pygame.transform.scale(imagenPeña, (180, 175))  # Ajustando el tamaño
+    ventanaSeleccion2.blit(imagenPeña, (360, 432))  # Visualizar la imagen con su posición
+    imagenStegen = pygame.image.load("Imagenes//Stegen.png")  # Agregando imagen de Stegen
+    imagenStegen = pygame.transform.scale(imagenStegen, (180, 175))  # Ajustando el tamaño
+    ventanaSeleccion2.blit(imagenStegen, (615, 432))  # Visualizar la imagen con su posición
     # ---- Imágen de los botones de selección porteros----
     # ---- Imágenes Seleccionadas ----
     porteros = 4
@@ -397,12 +402,12 @@ def screenSeleccion2():
     imagenSeleccionada3 = pygame.transform.scale(imagenSeleccionada3, (70, 70))  # Ajustando el tamaño
     posicionOpcion3Por = ventanaSeleccion2.blit(imagenSeleccionada3, (800, 482))  # Visualizar la imagen con su posición
     # ---- Estableciendo el estado inicial de selección donde todas están apagadas (no seleccionadas) ----
-    opcion1SeleccionadaJugadores = False
-    opcion2SeleccionadaJugadores = False
-    opcion3SeleccionadaJugadores = False
-    opcion1SeleccionadaPorteros = False
-    opcion2SeleccionadaPorteros = False
-    opcion3SeleccionadaPorteros = False
+    opcion1SeleccionadaJugadoresBarcelona = False
+    opcion2SeleccionadaJugadoresBarcelona = False
+    opcion3SeleccionadaJugadoresBarcelona = False
+    opcion1SeleccionadaPorterosBarcelona = False
+    opcion2SeleccionadaPorterosBarcelona = False
+    opcion3SeleccionadaPorterosBarcelona = False
     # ---- Bucle de la ventana de Selección 3 ----
     while True:
         for event in pygame.event.get():  # Iterando sobre eventos
@@ -416,43 +421,45 @@ def screenSeleccion2():
                         enSeleccionEquipo = False
                         screenConfiguracion()  # Ir a ventana principal
                     elif posicionOpcion1.collidepoint(event.pos):  # Verificar si se presionó el botón de la opción 1
-                        opcion1SeleccionadaJugadores = True  # Encendido
-                        opcion2SeleccionadaJugadores = False  # Apagado
-                        opcion3SeleccionadaJugadores = False  # Apagado
+                        opcion1SeleccionadaJugadoresBarcelona = True  # Encendido
+                        opcion2SeleccionadaJugadoresBarcelona = False  # Apagado
+                        opcion3SeleccionadaJugadoresBarcelona = False  # Apagado
                     elif posicionOpcion2.collidepoint(event.pos):  # Verificar si se presionó el botón de la opción 2
-                        opcion1SeleccionadaJugadores = False  # Apagado
-                        opcion2SeleccionadaJugadores = True  # Encendido
-                        opcion3SeleccionadaJugadores = False  # Apagado
+                        opcion1SeleccionadaJugadoresBarcelona = False  # Apagado
+                        opcion2SeleccionadaJugadoresBarcelona = True  # Encendido
+                        opcion3SeleccionadaJugadoresBarcelona = False  # Apagado
                     elif posicionOpcion3.collidepoint(event.pos):  # Verificar si se presionó el botón de la opción 3
-                        opcion1SeleccionadaJugadores = False  # Apagado
-                        opcion2SeleccionadaJugadores = False  # Apagado
-                        opcion3SeleccionadaJugadores = True  # Encendido
+                        opcion1SeleccionadaJugadoresBarcelona = False  # Apagado
+                        opcion2SeleccionadaJugadoresBarcelona = False  # Apagado
+                        opcion3SeleccionadaJugadoresBarcelona = True  # Encendido
                     elif posicionOpcion1Por.collidepoint(event.pos):  # Verificar si se presionó el botón de la opción 3
-                        opcion1SeleccionadaPorteros = True  # Encendido
-                        opcion2SeleccionadaPorteros = False  # Apagado
-                        opcion3SeleccionadaPorteros = False  # Apagado
+                        opcion1SeleccionadaPorterosBarcelona = True  # Encendido
+                        opcion2SeleccionadaPorterosBarcelona = False  # Apagado
+                        opcion3SeleccionadaPorterosBarcelona = False  # Apagado
                     elif posicionOpcion2Por.collidepoint(event.pos):  # Verificar si se presionó el botón de la opción 3
-                        opcion1SeleccionadaPorteros = False  # Apagado
-                        opcion2SeleccionadaPorteros = True  # Encendido
-                        opcion3SeleccionadaPorteros = False  # Apagado
+                        opcion1SeleccionadaPorterosBarcelona = False  # Apagado
+                        opcion2SeleccionadaPorterosBarcelona = True  # Encendido
+                        opcion3SeleccionadaPorterosBarcelona = False  # Apagado
                     elif posicionOpcion3Por.collidepoint(event.pos):  # Verificar si se presionó el botón de la opción 3
-                        opcion1SeleccionadaPorteros = False  # Apagado
-                        opcion2SeleccionadaPorteros = False  # Apagado
-                        opcion3SeleccionadaPorteros = True  # Encendido
+                        opcion1SeleccionadaPorterosBarcelona = False  # Apagado
+                        opcion2SeleccionadaPorterosBarcelona = False  # Apagado
+                        opcion3SeleccionadaPorterosBarcelona = True  # Encendido
         # ---- Dibujando los botones con la apariencia correspondiente a su estado de selección ----
-        ventanaSeleccion2.blit(imagenSeleccionadaOpcion1 if opcion1SeleccionadaJugadores else imagenNoSeleccionadaOpcion1, posicionOpcion1)
-        ventanaSeleccion2.blit(imagenSeleccionadaOpcion2 if opcion2SeleccionadaJugadores else imagenNoSeleccionadaOpcion2, posicionOpcion2)
-        ventanaSeleccion2.blit(imagenSeleccionadaOpcion3 if opcion3SeleccionadaJugadores else imagenNoSeleccionadaOpcion3, posicionOpcion3)
+        ventanaSeleccion2.blit(imagenSeleccionadaOpcion1 if opcion1SeleccionadaJugadoresBarcelona else imagenNoSeleccionadaOpcion1, posicionOpcion1)
+        ventanaSeleccion2.blit(imagenSeleccionadaOpcion2 if opcion2SeleccionadaJugadoresBarcelona else imagenNoSeleccionadaOpcion2, posicionOpcion2)
+        ventanaSeleccion2.blit(imagenSeleccionadaOpcion3 if opcion3SeleccionadaJugadoresBarcelona else imagenNoSeleccionadaOpcion3, posicionOpcion3)
         # ---- Dibujando los botones con la apariencia correspondiente a su estado de selección ----
-        ventanaSeleccion2.blit(imagenSeleccionadaOpcion1 if opcion1SeleccionadaPorteros else imagenNoSeleccionadaOpcion1, posicionOpcion1Por)
-        ventanaSeleccion2.blit(imagenSeleccionadaOpcion2 if opcion2SeleccionadaPorteros else imagenNoSeleccionadaOpcion2, posicionOpcion2Por)
-        ventanaSeleccion2.blit(imagenSeleccionadaOpcion3 if opcion3SeleccionadaPorteros else imagenNoSeleccionadaOpcion3, posicionOpcion3Por)
+        ventanaSeleccion2.blit(imagenSeleccionadaOpcion1 if opcion1SeleccionadaPorterosBarcelona else imagenNoSeleccionadaOpcion1, posicionOpcion1Por)
+        ventanaSeleccion2.blit(imagenSeleccionadaOpcion2 if opcion2SeleccionadaPorterosBarcelona else imagenNoSeleccionadaOpcion2, posicionOpcion2Por)
+        ventanaSeleccion2.blit(imagenSeleccionadaOpcion3 if opcion3SeleccionadaPorterosBarcelona else imagenNoSeleccionadaOpcion3, posicionOpcion3Por)
         pygame.display.flip()  # Actualizar Pantalla
 
 # ----------------------------------- Finalizando la Ventana de Selección 2 ---------------------------------
 
 # ----------------------------------- Iniciando la Ventana de Selección 3 -----------------------------------
 def screenSeleccion3():
+    global opcion1SeleccionadaJugadoresBayern, opcion2SeleccionadaJugadoresBayern, opcion3SeleccionadaJugadoresBayern
+    global opcion1SeleccionadaPorterosBayern, opcion2SeleccionadaPorterosBayern, opcion3SeleccionadaPorterosBayern
     global enSeleccionEquipo #Globalizando mi variable para saber si estoy en ventanas de selección de jugadores
     global jugadores, porteros
     pygame.mixer.music.set_volume(volumenGlobal) #Manteniendo el volumen
@@ -498,15 +505,15 @@ def screenSeleccion3():
     imagenNoSeleccionadaOpcion3 = pygame.transform.scale(imagenNoSeleccionadaOpcion3, (70, 70)) #Ajustando el tamaño
     posicionOpcion3 = ventanaSeleccion3.blit(imagenNoSeleccionadaOpcion3, (800,180)) #Visualizar la imagen con su posición
     # ---- Imágen de los porteros ----
-    imagenKane = pygame.image.load("Imagenes//ManuelNeuer.PNG") #Agregando imagen de Neuer
-    imagenKane = pygame.transform.scale(imagenKane, (180, 175)) #Ajustando el tamaño
-    ventanaSeleccion3.blit(imagenKane, (100,432)) #Visualizar la imagen con su posición
-    imagenMuller = pygame.image.load("Imagenes//SvenUlreich.PNG") #Agregando imagen de Ulreicj
-    imagenMuller = pygame.transform.scale(imagenMuller, (180, 175)) #Ajustando el tamaño
-    ventanaSeleccion3.blit(imagenMuller, (360,432)) #Visualizar la imagen con su posición
-    imagenMusiala = pygame.image.load("Imagenes//DanielPeretz.PNG") #Agregando imagen de Peretz
-    imagenMusiala = pygame.transform.scale(imagenMusiala, (180, 175)) #Ajustando el tamaño
-    ventanaSeleccion3.blit(imagenMusiala, (615,432)) #Visualizar la imagen con su posición
+    imagenNeuer = pygame.image.load("Imagenes//ManuelNeuer.PNG") #Agregando imagen de Neuer
+    imagenNeuer = pygame.transform.scale(imagenNeuer, (180, 175)) #Ajustando el tamaño
+    ventanaSeleccion3.blit(imagenNeuer, (100,432)) #Visualizar la imagen con su posición
+    imagenSvenUlreich = pygame.image.load("Imagenes//SvenUlreich.PNG") #Agregando imagen de Ulreicj
+    imagenSvenUlreich = pygame.transform.scale(imagenSvenUlreich, (180, 175)) #Ajustando el tamaño
+    ventanaSeleccion3.blit(imagenSvenUlreich, (360,432)) #Visualizar la imagen con su posición
+    imagenPeretz = pygame.image.load("Imagenes//DanielPeretz.PNG") #Agregando imagen de Peretz
+    imagenPeretz = pygame.transform.scale(imagenPeretz, (180, 175)) #Ajustando el tamaño
+    ventanaSeleccion3.blit(imagenPeretz, (615,432)) #Visualizar la imagen con su posición
     # ---- Imágen de los botones de selección porteros----
     # ---- Imágenes Seleccionadas ----
     porteros = 7
@@ -532,12 +539,12 @@ def screenSeleccion3():
     imagenSeleccionada3 = pygame.transform.scale(imagenSeleccionada3, (70, 70)) #Ajustando el tamaño
     posicionOpcion3Por = ventanaSeleccion3.blit(imagenSeleccionada3, (800,482)) #Visualizar la imagen con su posición
     # ---- Estableciendo el estado inicial de selección donde todas están apagadas (no seleccionadas) ----
-    opcion1SeleccionadaJugadores = False
-    opcion2SeleccionadaJugadores = False
-    opcion3SeleccionadaJugadores = False
-    opcion1SeleccionadaPorteros = False
-    opcion2SeleccionadaPorteros = False
-    opcion3SeleccionadaPorteros = False
+    opcion1SeleccionadaJugadoresBayern = False
+    opcion2SeleccionadaJugadoresBayern = False
+    opcion3SeleccionadaJugadoresBayern = False
+    opcion1SeleccionadaPorterosBayern = False
+    opcion2SeleccionadaPorterosBayern = False
+    opcion3SeleccionadaPorterosBayern = False
     # ---- Bucle de la ventana de Selección 3 ----
     while True:
         for event in pygame.event.get(): #Iterando sobre eventos
@@ -551,135 +558,77 @@ def screenSeleccion3():
                         enSeleccionEquipo = False
                         screenConfiguracion() #Ir a ventana principal
                     elif (posicionOpcion1.collidepoint(event.pos)): #Verificar si se presionó el botón de la opción 1
-                        opcion1SeleccionadaJugadores = True #Encendido
-                        opcion2SeleccionadaJugadores = False #Apagado
-                        opcion3SeleccionadaJugadores = False #Apagado
+                        opcion1SeleccionadaJugadoresBayern = True #Encendido
+                        opcion2SeleccionadaJugadoresBayern = False #Apagado
+                        opcion3SeleccionadaJugadoresBayern = False #Apagado
                     elif (posicionOpcion2.collidepoint(event.pos)): #Verificar si se presionó el botón de la opción 2
-                        opcion1SeleccionadaJugadores = False #Apagado
-                        opcion2SeleccionadaJugadores = True #Encendido
-                        opcion3SeleccionadaJugadores = False #Apagado
+                        opcion1SeleccionadaJugadoresBayern = False #Apagado
+                        opcion2SeleccionadaJugadoresBayern = True #Encendido
+                        opcion3SeleccionadaJugadoresBayern = False #Apagado
                     elif (posicionOpcion3.collidepoint(event.pos)): #Verificar si se presionó el botón de la opción 3
-                        opcion1SeleccionadaJugadores = False #Apagado
-                        opcion2SeleccionadaJugadores = False #Apagado
-                        opcion3SeleccionadaJugadores = True #Encendido
+                        opcion1SeleccionadaJugadoresBayern = False #Apagado
+                        opcion2SeleccionadaJugadoresBayern = False #Apagado
+                        opcion3SeleccionadaJugadoresBayern = True #Encendido
                     elif (posicionOpcion1Por.collidepoint(event.pos)): #Verificar si se presionó el botón de la opción 3
-                        opcion1SeleccionadaPorteros = True #Encendido
-                        opcion2SeleccionadaPorteros = False #Apagado
-                        opcion3SeleccionadaPorteros = False #Apagado
+                        opcion1SeleccionadaPorterosBayern = True #Encendido
+                        opcion2SeleccionadaPorterosBayern = False #Apagado
+                        opcion3SeleccionadaPorterosBayern = False #Apagado
                     elif (posicionOpcion2Por.collidepoint(event.pos)): #Verificar si se presionó el botón de la opción 3
-                        opcion1SeleccionadaPorteros = False #Apagado
-                        opcion2SeleccionadaPorteros = True #Encendido
-                        opcion3SeleccionadaPorteros = False #Apagado
+                        opcion1SeleccionadaPorterosBayern = False #Apagado
+                        opcion2SeleccionadaPorterosBayern = True #Encendido
+                        opcion3SeleccionadaPorterosBayern = False #Apagado
                     elif (posicionOpcion3Por.collidepoint(event.pos)): #Verificar si se presionó el botón de la opción 3
-                        opcion1SeleccionadaPorteros = False #Apagado
-                        opcion2SeleccionadaPorteros = False #Apagado
-                        opcion3SeleccionadaPorteros = True #Encendido
+                        opcion1SeleccionadaPorterosBayern = False #Apagado
+                        opcion2SeleccionadaPorterosBayern = False #Apagado
+                        opcion3SeleccionadaPorterosBayern = True #Encendido
             # ---- Dibujando los botones con la apariencia correspondiente a su estado de selección ----
-            ventanaSeleccion3.blit(imagenSeleccionadaOpcion1 if opcion1SeleccionadaJugadores else imagenNoSeleccionadaOpcion1, posicionOpcion1)
-            ventanaSeleccion3.blit(imagenSeleccionadaOpcion2 if opcion2SeleccionadaJugadores else imagenNoSeleccionadaOpcion2, posicionOpcion2)
-            ventanaSeleccion3.blit(imagenSeleccionadaOpcion3 if opcion3SeleccionadaJugadores else imagenNoSeleccionadaOpcion3, posicionOpcion3)
+            ventanaSeleccion3.blit(imagenSeleccionadaOpcion1 if opcion1SeleccionadaJugadoresBayern else imagenNoSeleccionadaOpcion1, posicionOpcion1)
+            ventanaSeleccion3.blit(imagenSeleccionadaOpcion2 if opcion2SeleccionadaJugadoresBayern else imagenNoSeleccionadaOpcion2, posicionOpcion2)
+            ventanaSeleccion3.blit(imagenSeleccionadaOpcion3 if opcion3SeleccionadaJugadoresBayern else imagenNoSeleccionadaOpcion3, posicionOpcion3)
             # ---- Dibujando los botones con la apariencia correspondiente a su estado de selección ----
-            ventanaSeleccion3.blit(imagenSeleccionadaOpcion1 if opcion1SeleccionadaPorteros else imagenNoSeleccionadaOpcion1, posicionOpcion1Por)
-            ventanaSeleccion3.blit(imagenSeleccionadaOpcion2 if opcion2SeleccionadaPorteros else imagenNoSeleccionadaOpcion2, posicionOpcion2Por)
-            ventanaSeleccion3.blit(imagenSeleccionadaOpcion3 if opcion3SeleccionadaPorteros else imagenNoSeleccionadaOpcion3, posicionOpcion3Por)
+            ventanaSeleccion3.blit(imagenSeleccionadaOpcion1 if opcion1SeleccionadaPorterosBayern else imagenNoSeleccionadaOpcion1, posicionOpcion1Por)
+            ventanaSeleccion3.blit(imagenSeleccionadaOpcion2 if opcion2SeleccionadaPorterosBayern else imagenNoSeleccionadaOpcion2, posicionOpcion2Por)
+            ventanaSeleccion3.blit(imagenSeleccionadaOpcion3 if opcion3SeleccionadaPorterosBayern else imagenNoSeleccionadaOpcion3, posicionOpcion3Por)
         pygame.display.flip() #Actualizar Pantalla
 # ----------------------------------- Finalizando la Ventana de Selección 3 ---------------------------------
 
 # ----------------------------------- Iniciando la Ventana de Juego -----------------------------------
-imagen_equipo = None
-imagen_equipo_contrario = None
-resultado_opuesto = None
-
-
-def equiposelec(resultado_moneda):
-    global imagen_equipo, imagen_equipo_contrario, resultado_opuesto
-    if equipo == 1:
-        imagen_equipo = pygame.image.load("Imagenes//Argentina.png")
-        imagen_equipo_contrario = pygame.image.load("Imagenes//Bayern.png")
-    elif equipo == 3:
-        imagen_equipo = pygame.image.load("Imagenes//Barcelona.png")
-        imagen_equipo_contrario = pygame.image.load("Imagenes//Argentina.png")
-    else:
-        imagen_equipo = pygame.image.load("Imagenes//Bayern.png")
-        imagen_equipo_contrario = pygame.image.load("Imagenes//Barcelona.png")
-
+def equiposelec():
+    global resultado_moneda
+    resultado_moneda = random.choice(["Local", "Visitante"])
     if resultado_moneda == "Local":
-        resultado_opuesto = "Visitante"
+        print("El equipo es local")
     else:
-        resultado_opuesto = "Local"
-
-def jugadoressel():
-    global imagen_equipo, imagen_equipo_contrario
-    if equipo == 1:
-        if jugadores == 1:
-            imagen_equipo = pygame.image.load("Imagenes//messi.png")
-        elif jugadores == 2:
-            imagen_equipo = pygame.image.load("Imagenes//Di María.png")
-        elif jugadores == 3:
-            imagen_equipo = pygame.image.load("Imagenes//dybala.png")
-        if porteros == 1:
-            imagen_equipo_contrario = pygame.image.load("Imagenes//Emiliano Martínez.png")
-        elif porteros == 2:
-            imagen_equipo_contrario = pygame.image.load("Imagenes//Gerónimo Rulli.png")
-        elif porteros == 3:
-            imagen_equipo_contrario = pygame.image.load("Imagenes//Franco Armani.png")
-    if equipo == 3:
-        if jugadores == 4:
-            imagen_equipo = pygame.image.load("Imagenes//Raphinha.png")
-        elif jugadores == 5:
-            imagen_equipo = pygame.image.load("Imagenes//RobertLewandowski.png")
-        elif jugadores == 6:
-            imagen_equipo = pygame.image.load("Imagenes//FerranTorres.png")
-        if porteros == 4:
-            imagen_equipo_contrario = pygame.image.load("Imagenes//Claudio Bravo.png")
-        elif porteros == 5:
-            imagen_equipo_contrario = pygame.image.load("Imagenes//IñakiPeña.png")
-        elif porteros == 6:
-            imagen_equipo_contrario = pygame.image.load("Imagenes//Stegen.png")
-    if equipo == 2:
-        if jugadores == 7:
-            imagen_equipo = pygame.image.load("Imagenes//HarryKane.png")
-        elif jugadores == 8:
-            imagen_equipo = pygame.image.load("Imagenes//ThomasMuller.PNG")
-        elif jugadores == 9:
-            imagen_equipo = pygame.image.load("Imagenes//JamalMusiala.PNG")
-        if porteros == 7:
-            imagen_equipo_contrario = pygame.image.load("Imagenes//ManuelNeuer.PNG")
-        elif porteros == 8:
-            imagen_equipo_contrario = pygame.image.load("Imagenes//SvenUlreich.PNG")
-        elif porteros == 9:
-            imagen_equipo_contrario = pygame.image.load("Imagenes//DanielPeretz.PNG")
+        print("El equipo es visitante")
+    return resultado_moneda
 
 def screenJuego():
-    global imagen_equipo, imagen_equipo_contrario, resultado_opuesto
-
-    pygame.mixer.music.set_volume(volumenGlobal)  # Manteniendo el volumen
-
     # Creando la ventana
     ventanaJuego = pygame.display.set_mode(sizeScreen)
-    pygame.display.set_caption("Sorteo")
-
-    # Definir tamaño
-    ANCHO = 800
-    ALTO = 600
+    pygame.mixer.music.set_volume(volumenGlobal)  # Manteniendo el volumen
+    fondoVentanaJuego = pygame.image.load("Imagenes//fondojuego.png")
+    ventanaJuego.blit(fondoVentanaJuego, (0,0))
 
     # Cargar imagen de la moneda
     imagen_moneda = pygame.image.load("Imagenes//Moneda.png")
-    imagen_moneda = pygame.transform.scale(imagen_moneda, (400, 400))  # Ajustando el tamaño
+    imagen_moneda = pygame.transform.scale(imagen_moneda, (320, 320))
 
-    # Cargar la imagen del botón
-    imagen_boton = pygame.image.load("Imagenes//Confirmar.png")
-    imagen_boton = pygame.transform.scale(imagen_boton, (100, 100))
-    boton_rect = imagen_boton.get_rect()
-    boton_rect.center = (sizeScreen[0] // 2, sizeScreen[1] // 1.2)
-
+    # Imágenes de Botón de Parar (Seleccionar)
+    imagenParar = pygame.image.load("Imagenes//botonparar.png")
+    imagenParar = pygame.transform.scale(imagenParar, (200, 200))
+    botonParar = ventanaJuego.blit(imagenParar, (390,500))
+    
+    # Botón de Regreso
+    botonRegreso = pygame.image.load("Imagenes//botondeRegreso.png")
+    botonRegreso = pygame.transform.scale(botonRegreso, (45, 45))
+    ventanaJuego.blit(botonRegreso, (10,10))
+    
     # Definir la clase Moneda
     class Moneda(pygame.sprite.Sprite):
         def __init__(self):
             super().__init__()
             self.image = imagen_moneda
-            self.rect = self.image.get_rect()
-            self.rect.center = (ANCHO // 2, ALTO // 2)
+            self.rect = self.image.get_rect(center=(450, 360))
             self.velocidad_rotacion = random.randint(3, 3)
             self.angulo = 0
             self.lanzada = False
@@ -689,10 +638,8 @@ def screenJuego():
             if self.lanzada:
                 if self.angulo % 360 < 90 or self.angulo % 360 > 270:
                     self.resultado = "Local"
-                    equiposelec(self.resultado)
                 else:
                     self.resultado = "Visitante"
-                    equiposelec(self.resultado)
             else:
                 self.angulo += self.velocidad_rotacion
                 self.image = pygame.transform.rotate(imagen_moneda, self.angulo)
@@ -705,112 +652,746 @@ def screenJuego():
     todos_los_sprites = pygame.sprite.Group()
     moneda = Moneda()
     todos_los_sprites.add(moneda)
-
+    
     # Bucle principal del juego
     ejecutando = True
     reloj = pygame.time.Clock()
-
-    # Nuevas variables para la posición y el tamaño de la imagen del equipo
-    x_equipo = 50  # Nueva posición X de la imagen del equipo
-    y_equipo = 50  # Nueva posición Y de la imagen del equipo
-    ancho_equipo = 200  # Nuevo ancho de la imagen del equipo
-    alto_equipo = 200  # Nuevo alto de la imagen del equipo
-
-    x_equipo_contrario = 650  # Posición X de la imagen del equipo contrario
-    y_equipo_contrario = 50  # Posición Y de la imagen del equipo contrario
-    y_texto_contrario = y_equipo_contrario + alto_equipo + 10  # Posición Y del texto del equipo contrario
+    resultado_moneda = None
 
     while ejecutando:
         for evento in pygame.event.get():
             if evento.type == pygame.QUIT:
                 ejecutando = False
-            elif evento.type == pygame.KEYDOWN:
-                if evento.key == pygame.K_SPACE and not moneda.lanzada:
-                    moneda.lanzar()
             elif evento.type == pygame.MOUSEBUTTONDOWN:
-                if boton_rect.collidepoint(evento.pos):  # Verificar si se hizo clic en el botón
-                    mostrar_seleccion_final()
+                if evento.button == 1: # Clic izquierdo
+                    if botonParar.collidepoint(evento.pos):
+                        moneda.lanzar()
+                        resultado_moneda = equiposelec()
+                        screenResultados()
+                    elif 15 < evento.pos[0] < 65 and 15 < evento.pos[1] < 65:
+                        screenPrincipal(volumenGlobal) # Botón de Regreso
 
         # Actualizar la animación de la moneda
         todos_los_sprites.update()
 
-        # Dibujar todo
-        ventanaJuego.fill((255, 255, 255))
-
-        # Dibujar la imagen del equipo en la nueva posición y tamaño
-        if imagen_equipo:
-            imagen_equipo_escalada = pygame.transform.scale(imagen_equipo, (ancho_equipo, alto_equipo))
-            ventanaJuego.blit(imagen_equipo_escalada, (x_equipo, y_equipo))
-
-        # Dibujar la imagen del equipo contrario
-        if imagen_equipo_contrario:
-            imagen_equipo_contrario_escalada = pygame.transform.scale(imagen_equipo_contrario,
-                                                                      (ancho_equipo, alto_equipo))
-            ventanaJuego.blit(imagen_equipo_contrario_escalada, (x_equipo_contrario, y_equipo_contrario))
+        # Dibujando rectángulo
+        pygame.draw.rect(ventanaJuego, pygame.Color("#FFFFFF"), (160, 180, 600, 450), 0)
 
         # Mostrar resultado opuesto debajo del equipo contrario
-        if resultado_opuesto:
-            fuente = pygame.font.Font(None, 24)
-            texto_contrario = fuente.render(resultado_opuesto, True, ("#000000"))
-            ventanaJuego.blit(texto_contrario, (
-            x_equipo_contrario + ancho_equipo // 2 - texto_contrario.get_width() // 2, y_texto_contrario))
-
         todos_los_sprites.draw(ventanaJuego)
-
-        # Mostrar resultado después de que la moneda haya aterrizado
-        if moneda.lanzada and moneda.resultado is not None:
-            fuente = pygame.font.Font(None, 28)
-            texto = fuente.render(f"{moneda.resultado}", True, ("#000000"))
-            ventanaJuego.blit(texto, (103,250))
-
-        # Dibujar la imagen del botón en la posición definida
-        ventanaJuego.blit(imagen_boton, boton_rect)
+        ventanaJuego.blit(imagenParar, botonParar)
 
         pygame.display.flip()
         reloj.tick(60)
 
-def mostrar_seleccion_final():
-    pygame.mixer.music.set_volume(volumenGlobal)
-    ventana_seleccionfinal = pygame.display.set_mode((sizeScreen))
-    pygame.display.set_caption("Selección Final")
-
-    jugadoressel()
-    ejecutando_seleccionfinal = True
-
-
-    # Definir las coordenadas y dimensiones del botón de confirmar
-    boton_confirmar = pygame.Rect(375, 400, 200, 50)
-
-
-    while ejecutando_seleccionfinal:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                ejecutando_seleccionfinal = False
-            elif event.type == pygame.MOUSEBUTTONDOWN:
-                # Verificar si se hizo clic en el botón de confirmar
-                if event.button == 1 and boton_confirmar.collidepoint(event.pos):
-                    print("Confirma")
-
-
-        ventana_seleccionfinal.fill((122, 186, 120))
-        if imagen_equipo:
-            ventana_seleccionfinal.blit(imagen_equipo, (75, 100))
-        if imagen_equipo_contrario:
-            ventana_seleccionfinal.blit(imagen_equipo_contrario, (575, 100))
-
-        # Dibujar el botón de confirmar
-        pygame.draw.rect(ventana_seleccionfinal, (122, 186, 120), boton_confirmar)
-
-        # Dibujar el texto del botón de confirmar
-        font = pygame.font.Font(None, 36)
-        texto_confirmar = font.render("Confirmar", True, (255, 255, 255))
-        texto_rect = texto_confirmar.get_rect(center=boton_confirmar.center)
-        ventana_seleccionfinal.blit(texto_confirmar, texto_rect)
-
-        pygame.display.flip()
-
-
+    pygame.quit()
 # ----------------------------------- Finalizando la Ventana de Juego ---------------------------------
+
+# ----------------------------------- Iniciando la Ventana de Resultados -----------------------------------
+def screenResultados():
+    global equipoSeleccionado, equipo_contrario, equipo
+    equipo = None
+    equipo_contrario = None
+    ventanaResultados = pygame.display.set_mode(sizeScreen) #Creación de Ventana
+    fondoVentanaResultados = pygame.image.load("Imagenes//Fondo Resultados.png") #Agregando fondo de pantalla de Configuración
+    ventanaResultados.blit(fondoVentanaResultados, (0,0)) #Visualizar el fondo
+    # ---- Botón de Regreso ----
+    botonRegreso = pygame.image.load("Imagenes//botondeRegreso.png") #Agregando Imagen representativa de botón de regreso
+    botonRegreso = pygame.transform.scale(botonRegreso, (45, 45)) #Ajustando el tamaño
+    ventanaResultados.blit(botonRegreso, (10,10)) #Visualizar la imagen con su posición
+    # ---- Botón de JUGAR ----
+    botonPlay = pygame.image.load("Imagenes//BotonPLAY.png") #Agregando Imagen representativa de botón de regreso
+    botonPlay = pygame.transform.scale(botonPlay, (100, 100)) #Ajustando el tamaño
+    ventanaResultados.blit(botonPlay, (425,535)) #Visualizar la imagen con su posición
+    # ---- Imágen Árbitro ----
+    imagenArbitro = pygame.image.load("Imagenes//arbitro.png") #Agregando Imagen representativa de botón de regreso
+    imagenArbitro = pygame.transform.scale(imagenArbitro, (200, 270)) #Ajustando el tamaño
+    ventanaResultados.blit(imagenArbitro, (373,240)) #Visualizar la imagen con su posición
+    # ---- Imágen de los Equipos ----
+    imagenArgentina = pygame.image.load("Imagenes//Argentina.png") #Agregando imagen Argentina
+    imagenArgentina = pygame.transform.scale(imagenArgentina, (150, 150)) #Ajustando el tamaño
+    imagenBarcelona = pygame.image.load("Imagenes//Barcelona.png") #Agregando imagen Barcelona
+    imagenBarcelona = pygame.transform.scale(imagenBarcelona, (150, 150)) #Ajustando el tamaño
+    imagenBayern = pygame.image.load("Imagenes//Bayern.png") #Agregando imagen Bayern
+    imagenBayern = pygame.transform.scale(imagenBayern, (150, 150)) #Ajustando el tamaño
+    # ---- Imágen de los jugadores Argentina ----
+    imagenDiMaria = pygame.image.load("Imagenes//Di María.png") #Agregando imagen de Di María
+    imagenDiMaria = pygame.transform.scale(imagenDiMaria, (180, 110)) #Ajustando el tamaño
+    imagenMessi = pygame.image.load("Imagenes//messi.png") #Agregando imagen de Messi
+    imagenMessi = pygame.transform.scale(imagenMessi, (180, 110)) #Ajustando el tamaño
+    imagenDybala = pygame.image.load("Imagenes//dybala.png") #Agregando imagen de Dybala
+    imagenDybala = pygame.transform.scale(imagenDybala, (180, 110)) #Ajustando el tamaño
+    # ---- Imágen de los porteros Argentina----
+    imagenMartinez = pygame.image.load("Imagenes//Emiliano Martínez.png") #Agregando imagen de Martínez
+    imagenMartinez = pygame.transform.scale(imagenMartinez, (180, 110)) #Ajustando el tamaño
+    imagenRulli = pygame.image.load("Imagenes//Gerónimo Rulli.png") #Agregando imagen de Rulli
+    imagenRulli = pygame.transform.scale(imagenRulli, (180, 110)) #Ajustando el tamaño
+    imagenArmani = pygame.image.load("Imagenes//Franco Armani.png") #Agregando imagen de Armani
+    imagenArmani = pygame.transform.scale(imagenArmani, (180, 110)) #Ajustando el tamaño
+    # ---- Imágen de los jugadores Barcelona----
+    imagenRaphinha = pygame.image.load("Imagenes//Raphinha.png")  # Agregando imagen de Raphinha
+    imagenRaphinha = pygame.transform.scale(imagenRaphinha, (180, 110))  # Ajustando el tamaño
+    imagenRobertLewandowski = pygame.image.load("Imagenes//RobertLewandowski.png")  # Agregando imagen de Lewandowski
+    imagenRobertLewandowski = pygame.transform.scale(imagenRobertLewandowski, (180, 110))  # Ajustando el tamaño
+    imagenFerranTorres = pygame.image.load("Imagenes//FerranTorres.png")  # Agregando imagen de Torres
+    imagenFerranTorres = pygame.transform.scale(imagenFerranTorres, (180, 110))  # Ajustando el tamaño
+    # ---- Imágen de los porteros Barcelona----
+    imagenBravo = pygame.image.load("Imagenes//Claudio Bravo.png")  # Agregando imagen de Bravo
+    imagenBravo = pygame.transform.scale(imagenBravo, (180, 110))  # Ajustando el tamaño
+    imagenPeña = pygame.image.load("Imagenes//IñakiPeña.png")  # Agregando imagen de Peña
+    imagenPeña = pygame.transform.scale(imagenPeña, (180, 110))  # Ajustando el tamaño
+    imagenStegen = pygame.image.load("Imagenes//Stegen.png")  # Agregando imagen de Stegen
+    imagenStegen = pygame.transform.scale(imagenStegen, (180, 110))  # Ajustando el tamaño
+    # ---- Imágen de los jugadores Bayern ----
+    imagenKane = pygame.image.load("Imagenes//HarryKane.png") #Agregando imagen de Kane
+    imagenKane = pygame.transform.scale(imagenKane, (180, 110)) #Ajustando el tamaño
+    imagenMuller = pygame.image.load("Imagenes//ThomasMuller.PNG") #Agregando imagen de Muller
+    imagenMuller = pygame.transform.scale(imagenMuller, (180, 110)) #Ajustando el tamaño
+    imagenMusiala = pygame.image.load("Imagenes//JamalMusiala.PNG") #Agregando imagen de Musiala
+    imagenMusiala = pygame.transform.scale(imagenMusiala, (180, 110)) #Ajustando el tamaño
+    # ---- Imágen de los porteros Bayern----
+    imagenNeuer = pygame.image.load("Imagenes//ManuelNeuer.PNG") #Agregando imagen de Neuer
+    imagenNeuer = pygame.transform.scale(imagenNeuer, (180, 110)) #Ajustando el tamaño
+    imagenSvenUlreich = pygame.image.load("Imagenes//SvenUlreich.PNG") #Agregando imagen de Ulreicj
+    imagenSvenUlreich = pygame.transform.scale(imagenSvenUlreich, (180, 110)) #Ajustando el tamaño
+    imagenPeretz = pygame.image.load("Imagenes//DanielPeretz.PNG") #Agregando imagen de Peretz
+    imagenPeretz = pygame.transform.scale(imagenPeretz, (180, 110)) #Ajustando el tamaño
+    # ---- Bucle Principal de resultados ----
+    while True: #Bucle para ventana principal
+        for event in pygame.event.get(): # Iterando sobre eventos
+            if event.type == pygame.QUIT: # Si el usuario intenta cerrar ventana
+                pygame.quit() # Saliendo del juego
+                sys.exit()
+            elif event.type == pygame.MOUSEBUTTONDOWN: # Detectar clic del mouse
+                if event.button == 1: # Verificar si fue clic izquierdo
+                    x, y = event.pos # Guardando en variables donde se hizo clic
+                    # Verificar si el clic fue dentro de alguno de los botones de la Ventana Principal
+                    if (15 < x < 65 and 15 < y < 65): #Botón de Regreso
+                        screenJuego() #Ir a ventana principal
+                    if (425 < x < 525 and 535 < y < 635): #Botón de Regreso
+                        screenEstadisticas() #Ir a ventana de Estadisticas
+                    # ---- Encontrando equipo contrario ----
+                    equipos_disponibles = ["Argentina", "Barcelona", "Bayern"]
+                    if equipoSeleccionado in equipos_disponibles:
+                        equipos_disponibles.remove(equipoSeleccionado)  # Eliminar el equipo seleccionado de la lista
+                    else:
+                        equipo_contrario = random.choice(equipos_disponibles)
+                    print("Equipo contrario:", equipo_contrario)
+                    if (resultado_moneda == "Local"):
+                        if (equipoSeleccionado == 1):  #Argentina
+                            equipos_disponibles = ["Barcelona", "Bayern"]
+                            equipo_contrario = random.choice(equipos_disponibles)
+                            print("Equipo contrario:", equipo_contrario)
+                            # ---- Encontrando equipo contrario ----
+                            if equipo_contrario == "Barcelona":
+                                jugadores_equipo_contrario = [imagenRaphinha, imagenRobertLewandowski, imagenFerranTorres]
+                                porteros_equipo_contrario = [imagenBravo, imagenPeña, imagenStegen]
+                                img_equipo_contrario = imagenBarcelona
+                            elif equipo_contrario == "Bayern":
+                                jugadores_equipo_contrario = [imagenKane, imagenMuller, imagenMusiala]
+                                porteros_equipo_contrario = [imagenNeuer, imagenSvenUlreich, imagenPeretz]
+                                img_equipo_contrario = imagenBayern
+                            elif equipo_contrario == "Argentina":
+                                jugadores_equipo_contrario = [imagenDiMaria, imagenMessi, imagenDybala]
+                                porteros_equipo_contrario = [imagenMartinez, imagenRulli, imagenArmani]
+                                img_equipo_contrario = imagenArgentina
+                            jugador_contrario = random.choice(jugadores_equipo_contrario)
+                            portero_contrario = random.choice(porteros_equipo_contrario)
+                            # ---- COMIENZO ----
+                            ventanaResultados.blit(imagenArgentina, (115, 165))
+                            equipo == "Local" #Definiendo si es local o visitante
+                            if (opcion1SeleccionadaJugadoresArgentina):
+                                ventanaResultados.blit(imagenDiMaria, (105, 360))
+                            elif (opcion2SeleccionadaJugadoresArgentina):
+                                ventanaResultados.blit(imagenMessi, (105, 360))
+                            elif (opcion3SeleccionadaJugadoresArgentina):
+                                ventanaResultados.blit(imagenDybala, (105, 360))
+                            if (opcion1SeleccionadaPorterosArgentina):
+                                ventanaResultados.blit(imagenMartinez, (105, 480))
+                            elif (opcion2SeleccionadaPorterosArgentina):
+                                ventanaResultados.blit(imagenRulli, (105, 480))
+                            elif (opcion3SeleccionadaPorterosArgentina):
+                                ventanaResultados.blit(imagenArmani, (105, 480))
+                            ventanaResultados.blit(jugador_contrario, (660, 360))
+                            ventanaResultados.blit(portero_contrario, (660, 480))
+                            ventanaResultados.blit(img_equipo_contrario, (676,165))
+                        elif (equipoSeleccionado == 2): #Barcelona
+                            equipos_disponibles = ["Argentina", "Bayern"]
+                            equipo_contrario = random.choice(equipos_disponibles)
+                            print("Equipo contrario:", equipo_contrario)
+                            # ---- Encontrando equipo contrario ----
+                            if equipo_contrario == "Barcelona":
+                                jugadores_equipo_contrario = [imagenRaphinha, imagenRobertLewandowski, imagenFerranTorres]
+                                porteros_equipo_contrario = [imagenBravo, imagenPeña, imagenStegen]
+                                img_equipo_contrario = imagenBarcelona
+                            elif equipo_contrario == "Bayern":
+                                jugadores_equipo_contrario = [imagenKane, imagenMuller, imagenMusiala]
+                                porteros_equipo_contrario = [imagenNeuer, imagenSvenUlreich, imagenPeretz]
+                                img_equipo_contrario = imagenBayern
+                            elif equipo_contrario == "Argentina":
+                                jugadores_equipo_contrario = [imagenDiMaria, imagenMessi, imagenDybala]
+                                porteros_equipo_contrario = [imagenMartinez, imagenRulli, imagenArmani]
+                                img_equipo_contrario = imagenArgentina
+                            jugador_contrario = random.choice(jugadores_equipo_contrario)
+                            portero_contrario = random.choice(porteros_equipo_contrario)
+                            # ---- COMIENZO ----
+                            ventanaResultados.blit(imagenBarcelona, (113,170))
+                            equipo == "Local" #Definiendo si es local o visitante
+                            if (opcion1SeleccionadaJugadoresBarcelona):
+                                ventanaResultados.blit(imagenRaphinha, (105, 360))
+                            elif (opcion2SeleccionadaJugadoresBarcelona):
+                                ventanaResultados.blit(imagenRobertLewandowski, (105, 360))
+                            elif(opcion3SeleccionadaJugadoresBarcelona):
+                                ventanaResultados.blit(imagenFerranTorres, (105, 360))
+                            if (opcion1SeleccionadaPorterosBarcelona):
+                                ventanaResultados.blit(imagenBravo, (105, 480))
+                            elif (opcion2SeleccionadaPorterosBarcelona):
+                                ventanaResultados.blit(imagenPeña, (105, 480))
+                            elif(opcion3SeleccionadaPorterosBarcelona):
+                                ventanaResultados.blit(imagenStegen, (105, 480))
+                            ventanaResultados.blit(jugador_contrario, (660, 360))
+                            ventanaResultados.blit(portero_contrario, (660, 480))
+                            ventanaResultados.blit(img_equipo_contrario, (676,165))
+                        elif (equipoSeleccionado == 3): #Bayern
+                            equipos_disponibles = ["Barcelona", "Argentina"]
+                            equipo_contrario = random.choice(equipos_disponibles)
+                            print("Equipo contrario:", equipo_contrario)
+                            # ---- Encontrando equipo contrario ----
+                            if equipo_contrario == "Barcelona":
+                                jugadores_equipo_contrario = [imagenRaphinha, imagenRobertLewandowski, imagenFerranTorres]
+                                porteros_equipo_contrario = [imagenBravo, imagenPeña, imagenStegen]
+                                img_equipo_contrario = imagenBarcelona
+                            elif equipo_contrario == "Bayern":
+                                jugadores_equipo_contrario = [imagenKane, imagenMuller, imagenMusiala]
+                                porteros_equipo_contrario = [imagenNeuer, imagenSvenUlreich, imagenPeretz]
+                                img_equipo_contrario = imagenBayern
+                            elif equipo_contrario == "Argentina":
+                                jugadores_equipo_contrario = [imagenDiMaria, imagenMessi, imagenDybala]
+                                porteros_equipo_contrario = [imagenMartinez, imagenRulli, imagenArmani]
+                                img_equipo_contrario = imagenArgentina
+                            jugador_contrario = random.choice(jugadores_equipo_contrario)
+                            portero_contrario = random.choice(porteros_equipo_contrario)
+                            # ---- COMIENZO ----
+                            ventanaResultados.blit(imagenBayern, (115,160))
+                            equipo == "Local" #Definiendo si es local o visitante
+                            if (opcion1SeleccionadaJugadoresBayern):
+                                ventanaResultados.blit(imagenKane, (105, 360))
+                            elif (opcion2SeleccionadaJugadoresBayern):
+                                ventanaResultados.blit(imagenMuller, (105, 360))
+                            elif(opcion3SeleccionadaJugadoresBayern):
+                                ventanaResultados.blit(imagenMusiala, (105, 360))
+                            if (opcion1SeleccionadaPorterosBayern):
+                                ventanaResultados.blit(imagenNeuer, (105, 480))
+                            elif (opcion2SeleccionadaPorterosBayern):
+                                ventanaResultados.blit(imagenSvenUlreich, (105, 480))
+                            elif(opcion3SeleccionadaPorterosBayern):
+                                ventanaResultados.blit(imagenPeretz, (105, 480))
+                            ventanaResultados.blit(jugador_contrario, (660, 360))
+                            ventanaResultados.blit(portero_contrario, (660, 480))
+                            ventanaResultados.blit(img_equipo_contrario, (676,165))
+                            
+                    if (resultado_moneda == "Visitante"):
+                        if (equipoSeleccionado == 1):  # Argentina
+                            equipos_disponibles = ["Barcelona", "Bayern"]
+                            equipo_contrario = random.choice(equipos_disponibles)
+                            print("Equipo contrario:", equipo_contrario)
+                            # ---- Encontrando equipo contrario ----
+                            if equipo_contrario == "Barcelona":
+                                jugadores_equipo_contrario = [imagenRaphinha, imagenRobertLewandowski, imagenFerranTorres]
+                                porteros_equipo_contrario = [imagenBravo, imagenPeña, imagenStegen]
+                                img_equipo_contrario = imagenBarcelona
+                            elif equipo_contrario == "Bayern":
+                                jugadores_equipo_contrario = [imagenKane, imagenMuller, imagenMusiala]
+                                porteros_equipo_contrario = [imagenNeuer, imagenSvenUlreich, imagenPeretz]
+                                img_equipo_contrario = imagenBayern
+                            elif equipo_contrario == "Argentina":
+                                jugadores_equipo_contrario = [imagenDiMaria, imagenMessi, imagenDybala]
+                                porteros_equipo_contrario = [imagenMartinez, imagenRulli, imagenArmani]
+                                img_equipo_contrario = imagenArgentina
+                            jugador_contrario = random.choice(jugadores_equipo_contrario)
+                            portero_contrario = random.choice(porteros_equipo_contrario)
+                            # ---- COMIENZO ----
+                            ventanaResultados.blit(imagenArgentina, (676, 165))
+                            equipo == "Visitante" #Definiendo si es local o visitante
+                            if (opcion1SeleccionadaJugadoresArgentina):
+                                ventanaResultados.blit(imagenDiMaria, (660, 360))
+                            elif (opcion2SeleccionadaJugadoresArgentina):
+                                ventanaResultados.blit(imagenMessi, (660, 360))
+                            elif (opcion3SeleccionadaJugadoresArgentina):
+                                ventanaResultados.blit(imagenDybala, (660, 360))
+                            if (opcion1SeleccionadaPorterosArgentina):
+                                ventanaResultados.blit(imagenMartinez, (660, 480))
+                            elif (opcion2SeleccionadaPorterosArgentina):
+                                ventanaResultados.blit(imagenRulli, (660, 480))
+                            elif (opcion3SeleccionadaPorterosArgentina):
+                                ventanaResultados.blit(imagenArmani, (660, 480))
+                            ventanaResultados.blit(jugador_contrario, (105, 360))
+                            ventanaResultados.blit(portero_contrario, (105, 480))
+                            ventanaResultados.blit(img_equipo_contrario, (115,165))
+                        elif (equipoSeleccionado == 2): #Barcelona
+                            equipos_disponibles = ["Bayern", "Argentina"]
+                            equipo_contrario = random.choice(equipos_disponibles)
+                            print("Equipo contrario:", equipo_contrario)
+                            # ---- Encontrando equipo contrario ----
+                            if equipo_contrario == "Barcelona":
+                                jugadores_equipo_contrario = [imagenRaphinha, imagenRobertLewandowski, imagenFerranTorres]
+                                porteros_equipo_contrario = [imagenBravo, imagenPeña, imagenStegen]
+                                img_equipo_contrario = imagenBarcelona
+                            elif equipo_contrario == "Bayern":
+                                jugadores_equipo_contrario = [imagenKane, imagenMuller, imagenMusiala]
+                                porteros_equipo_contrario = [imagenNeuer, imagenSvenUlreich, imagenPeretz]
+                                img_equipo_contrario = imagenBayern
+                            elif equipo_contrario == "Argentina":
+                                jugadores_equipo_contrario = [imagenDiMaria, imagenMessi, imagenDybala]
+                                porteros_equipo_contrario = [imagenMartinez, imagenRulli, imagenArmani]
+                                img_equipo_contrario = imagenArgentina
+                            jugador_contrario = random.choice(jugadores_equipo_contrario)
+                            portero_contrario = random.choice(porteros_equipo_contrario)
+                            # ---- COMIENZO ----
+                            ventanaResultados.blit(imagenBarcelona, (676,170))
+                            equipo == "Visitante" #Definiendo si es local o visitante
+                            if (opcion1SeleccionadaJugadoresBarcelona):
+                                ventanaResultados.blit(imagenRaphinha, (660, 360))
+                            elif (opcion2SeleccionadaJugadoresBarcelona):
+                                ventanaResultados.blit(imagenRobertLewandowski, (660, 360))
+                            elif(opcion3SeleccionadaJugadoresBarcelona):
+                                ventanaResultados.blit(imagenFerranTorres, (660, 360))
+                            if (opcion1SeleccionadaPorterosBarcelona):
+                                ventanaResultados.blit(imagenBravo, (660, 480))
+                            elif (opcion2SeleccionadaPorterosBarcelona):
+                                ventanaResultados.blit(imagenPeña, (660, 480))
+                            elif(opcion3SeleccionadaPorterosBarcelona):
+                                ventanaResultados.blit(imagenStegen, (660, 480))
+                            ventanaResultados.blit(jugador_contrario, (105, 360))
+                            ventanaResultados.blit(portero_contrario, (105, 480))
+                            ventanaResultados.blit(img_equipo_contrario, (115,165))
+                        elif (equipoSeleccionado == 3): #Bayern
+                            equipos_disponibles = ["Barcelona", "Argentina"]
+                            equipo_contrario = random.choice(equipos_disponibles)
+                            print("Equipo contrario:", equipo_contrario)
+                            # ---- Encontrando equipo contrario ----
+                            if equipo_contrario == "Barcelona":
+                                jugadores_equipo_contrario = [imagenRaphinha, imagenRobertLewandowski, imagenFerranTorres]
+                                porteros_equipo_contrario = [imagenBravo, imagenPeña, imagenStegen]
+                                img_equipo_contrario = imagenBarcelona
+                            elif equipo_contrario == "Bayern":
+                                jugadores_equipo_contrario = [imagenKane, imagenMuller, imagenMusiala]
+                                porteros_equipo_contrario = [imagenNeuer, imagenSvenUlreich, imagenPeretz]
+                                img_equipo_contrario = imagenBayern
+                            elif equipo_contrario == "Argentina":
+                                jugadores_equipo_contrario = [imagenDiMaria, imagenMessi, imagenDybala]
+                                porteros_equipo_contrario = [imagenMartinez, imagenRulli, imagenArmani]
+                                img_equipo_contrario = imagenArgentina
+                            jugador_contrario = random.choice(jugadores_equipo_contrario)
+                            portero_contrario = random.choice(porteros_equipo_contrario)
+                            # ---- COMIENZO ----
+                            ventanaResultados.blit(imagenBayern, (676,160))
+                            equipo == "Visitante" #Definiendo si es local o visitante
+                            if (opcion1SeleccionadaJugadoresBayern):
+                                ventanaResultados.blit(imagenKane, (660, 360))
+                            elif (opcion2SeleccionadaJugadoresBayern):
+                                ventanaResultados.blit(imagenMuller, (660, 360))
+                            elif(opcion3SeleccionadaJugadoresBayern):
+                                ventanaResultados.blit(imagenMusiala, (660, 360))
+                            if (opcion1SeleccionadaPorterosBayern):
+                                ventanaResultados.blit(imagenNeuer, (660, 480))
+                            elif (opcion2SeleccionadaPorterosBayern):
+                                ventanaResultados.blit(imagenSvenUlreich, (660, 480))
+                            elif(opcion3SeleccionadaPorterosBayern):
+                                ventanaResultados.blit(imagenPeretz, (660, 480))
+                            ventanaResultados.blit(jugador_contrario, (105, 360))
+                            ventanaResultados.blit(portero_contrario, (105, 480))
+                            ventanaResultados.blit(img_equipo_contrario, (115,165))
+        pygame.display.flip() #Actualizando Pantalla
+
+# ----------------------------------- Finalizando la Ventana de Resultados ---------------------------------
+
+# ----------------------------------- Iniciando la Ventana de Estadisticas -----------------------------------
+def screenEstadisticas():
+    global equipo_contrario, estado_gol
+    global equipo1_goles, equipo2_goles  # Contadores de goles
+    equipo1_goles = 0
+    equipo2_goles = 0
+    estado_gol = None
+    pygame.mixer.music.set_volume(volumenGlobal) #Manteniendo el volumen
+    ventanaEstadisticas = pygame.display.set_mode(sizeScreen) #Creación de Ventana
+    fondoVentanaEstadisticas = pygame.image.load("Imagenes//Estadisticas.png") #Agregando fondo de pantalla de Información
+    ventanaEstadisticas.blit(fondoVentanaEstadisticas, (0,0)) #Visualizar el fondo
+    # ---- Botón de Regreso ----
+    botonRegreso = pygame.image.load("Imagenes//botondeRegreso.png") #Agregando Imagen representativa de botón de regreso
+    botonRegreso = pygame.transform.scale(botonRegreso, (45, 45)) #Ajustando el tamaño
+    ventanaEstadisticas.blit(botonRegreso, (10,10)) #Visualizar la imagen con su posición
+    # ---- Imágenes de estado de gol ----
+    esperandoGol = pygame.image.load("Imagenes//esperandogol.png") #Agregando Imagen representativa de botón de regreso
+    esperandoGol = pygame.transform.scale(esperandoGol, (70, 70)) #Ajustando el tamaño
+    siGol = pygame.image.load("Imagenes//SIgol.png") #Agregando Imagen representativa de botón de regreso
+    siGol = pygame.transform.scale(siGol, (70, 70)) #Ajustando el tamaño
+    noGol = pygame.image.load("Imagenes//NOgol.png") #Agregando Imagen representativa de botón de regreso
+    noGol = pygame.transform.scale(noGol, (70, 70)) #Ajustando el tamaño
+    
+    # Cargar el archivo de sonido
+    sonido_festejo = pygame.mixer.Sound("Musica//APLAUSOS.mpeg")
+    sonido_tristeza = pygame.mixer.Sound("Musica//ABUCHEO.mp3")
+    sonido_silbato = pygame.mixer.Sound("Musica//SILBATO.mp3")
+    sonido_comienzo = pygame.mixer.Sound("Musica//CONTADOR.mp3")
+    
+    # ---- Orden Sonidos ----
+    canal_silbato = pygame.mixer.Channel(0)  # Crear un nuevo canal para el silbato
+    canal_comienzo = pygame.mixer.Channel(1)  # Crear un nuevo canal para el comienzo
+    
+    sonido_silbato.play() # Sonando apenas se abre la ventana
+    canal_comienzo.play(sonido_comienzo) # Sonando de comienzo
+    pygame.time.wait(int(sonido_comienzo.get_length() * 1000))  # Esperar la duración del sonido de comienzo
+    canal_silbato.play(sonido_silbato) # Sonando para comenzar a tirar goles
+    
+    # Generar posición aleatoria para el portero
+    portero_posicion = random.randint(1, 6)
+    pos_x_portero = 115 + ((portero_posicion - 1) * 110)  # Calcular la posición x de la paleta seleccionada
+    # Dibujar el portero invisible
+    portero_invisible = pygame.image.load("Imagenes//paleta.png")
+    portero_invisible = pygame.transform.scale(portero_invisible, (183, 300))
+    ventanaEstadisticas.blit(portero_invisible, (pos_x_portero, 350))  # La posición y puede ajustarse según sea necesario
+    
+    # ---- Imágenes de paletas ----
+    paleta1 = pygame.image.load("Imagenes//paleta.png") #Agregando Imagen representativa de botón de regreso
+    paleta1 = pygame.transform.scale(paleta1, (183, 300)) #Ajustando el tamaño
+    posicionPaleta1 = ventanaEstadisticas.blit(paleta1, (115,350)) #Visualizar la imagen con su posición
+    paleta2 = pygame.image.load("Imagenes//paleta.png") #Agregando Imagen representativa de botón de regreso
+    paleta2 = pygame.transform.scale(paleta2, (183, 300)) #Ajustando el tamaño
+    posicionPaleta2 = ventanaEstadisticas.blit(paleta2, (225,350)) #Visualizar la imagen con su posición
+    paleta3 = pygame.image.load("Imagenes//paleta.png") #Agregando Imagen representativa de botón de regreso
+    paleta3 = pygame.transform.scale(paleta3, (183, 300)) #Ajustando el tamaño
+    posicionPaleta3 = ventanaEstadisticas.blit(paleta3, (335,350)) #Visualizar la imagen con su posición
+    paleta4 = pygame.image.load("Imagenes//paleta.png") #Agregando Imagen representativa de botón de regreso
+    paleta4 = pygame.transform.scale(paleta4, (183, 300)) #Ajustando el tamaño
+    posicionPaleta4 = ventanaEstadisticas.blit(paleta4, (445,350)) #Visualizar la imagen con su posición
+    paleta5 = pygame.image.load("Imagenes//paleta.png") #Agregando Imagen representativa de botón de regreso
+    paleta5 = pygame.transform.scale(paleta5, (183, 300)) #Ajustando el tamaño
+    posicionPaleta5 = ventanaEstadisticas.blit(paleta5, (555,350)) #Visualizar la imagen con su posición
+    paleta6 = pygame.image.load("Imagenes//paleta.png") #Agregando Imagen representativa de botón de regreso
+    paleta6 = pygame.transform.scale(paleta6, (183, 300)) #Ajustando el tamaño
+    posicionPaleta6 = ventanaEstadisticas.blit(paleta6, (665,350)) #Visualizar la imagen con su posición
+    
+    # Coordenadas para los círculos de "esperando gol" ELEGIDO POR USUARIO
+    coordenadas_esperando_gol_elegido = [(50, 185), (130, 185), (210, 185), (290, 185), (370, 185)]
+    # Coordenadas para los círculos de "esperando gol" EQUIPO CONTRARIO
+    coordenadas_esperando_gol_contrario = [(510, 185), (590, 185), (670, 185), (750, 185), (830, 185)]
+    
+    # ---- Variables de temporización ----
+    tiempo_entre_turnos = 3000  # 3 segundos en milisegundos
+    tiempo_ultimo_clic = pygame.time.get_ticks()  # Variable para almacenar el tiempo del último clic
+    
+    # Definir la función para determinar el equipo que tiene el turno
+    def determinarTurno(clics_totales):
+        # Si el recuento total de clics es par, es el turno del segundo equipo
+        if clics_totales % 2 == 0:
+            return 2
+        else:
+            return 1
+
+    # Dibujar los primeros 5 círculos negros de "esperando gol" ELEGIDO POR USUARIO
+    for coordenada in coordenadas_esperando_gol_elegido:
+        ventanaEstadisticas.blit(esperandoGol, coordenada)
+    # Dibujar los primeros 5 círculos negros de "esperando gol" EQUIPO CONTRARIO
+    for coordenada in coordenadas_esperando_gol_contrario:
+        ventanaEstadisticas.blit(esperandoGol, coordenada)
+    
+    # Definir la función para actualizar la apariencia de los círculos de gol
+    def aparienciaGol(gol, turno_equipo):
+        if gol:  # Si hubo gol
+            if turno_equipo == 1:  # Si es el turno del primer equipo (local)
+                if coordenadas_esperando_gol_elegido:  # Verificar si hay elementos en la lista
+                    coordenada = coordenadas_esperando_gol_elegido.pop(0)  # Tomar la primera coordenada del equipo local
+                    ventanaEstadisticas.blit(siGol, coordenada)  # Dibujar círculo de gol para el equipo local
+            else:  # Si es el turno del segundo equipo (visitante)
+                if coordenadas_esperando_gol_contrario:  # Verificar si hay elementos en la lista
+                    coordenada = coordenadas_esperando_gol_contrario.pop(0)  # Tomar la primera coordenada del equipo contrario
+                    ventanaEstadisticas.blit(siGol, coordenada)  # Dibujar círculo de gol para el equipo contrario
+        else:  # Si no hubo gol
+            if turno_equipo == 1:  # Si es el turno del primer equipo (local)
+                if coordenadas_esperando_gol_elegido:  # Verificar si hay elementos en la lista
+                    coordenada = coordenadas_esperando_gol_elegido.pop(0)  # Tomar la primera coordenada del equipo local
+                    ventanaEstadisticas.blit(noGol, coordenada)  # Dibujar círculo de no gol para el equipo local
+            else:  # Si es el turno del segundo equipo (visitante)
+                if coordenadas_esperando_gol_contrario:  # Verificar si hay elementos en la lista
+                    coordenada = coordenadas_esperando_gol_contrario.pop(0)  # Tomar la primera coordenada del equipo contrario
+                    ventanaEstadisticas.blit(noGol, coordenada)  # Dibujar círculo de no gol para el equipo contrario
+
+    #---- Comienzo de Equipo ----
+    turno_equipo = 1  # Empezamos con el equipo local
+    clics_totales = 0  # Inicializamos el contador de clics totales
+    
+    #----Variables de tiempo paletas----
+    tiempoPrimerPaleta = 0
+    tiempoSegundaPaleta = 0
+    tiempoTercerPaleta = 0
+    tiempoCuartaPaleta = 0
+    tiempoQuintaPaleta = 0
+    tiempoSextaPaleta = 0
+
+    # ---- Bucle de la ventana de Estadisticas ----
+    while True:
+        for event in pygame.event.get(): #Iterando sobre eventos
+            if (event.type == pygame.QUIT): #Si usuario intenta cerrar ventana:
+                pygame.quit() #Cerrando ventana
+                sys.exit() #Saliendo del script Python por completo para detener el programa en su totalidad
+            elif (event.type == pygame.MOUSEBUTTONDOWN): #Detectar clic del mouse
+                if (event.button == 1): #Verificar si fue clic izquierdo
+                    x, y = event.pos #Guardando en variables donde se hizo clic
+                    # ---- Verificar si el clic fue dentro de alguno de los botones de la Ventana de Información ----
+                    if (15 < x < 65 and 15 < y < 65): #Botón de Regreso
+                        screenPrincipal(volumenGlobal) #Ir a ventana principal
+                    if turno_equipo == 1: # Si es el turno del equipo local
+                        
+                        if (posicionPaleta1.collidepoint(event.pos)):
+                            # Verificar si ha pasado el tiempo adecuado entre clics
+                            if tiempoPrimerPaleta + tiempo_entre_turnos < pygame.time.get_ticks():
+                                # Actualizar el tiempo del último clic
+                                tiempoPrimerPaleta = pygame.time.get_ticks()
+                                pygame.mixer.music.set_volume(volumenGlobal * 0.005)  # Reducir el volumen de la música de fondo a la mitad
+                                if (portero_posicion == 1):
+                                    sonido_tristeza.play()
+                                    print("No fue gol")
+                                    gol = False
+                                else:
+                                    sonido_festejo.play()
+                                    print("GOL")
+                                    gol = True
+                                if tiempoTercerPaleta > tiempo_entre_turnos:
+                                    sonido_tristeza.play()
+                                    print("No fue gol")
+                                    gol = False
+                                clics_totales += 1  # Incrementar el contador de clics totales
+                                turno_equipo = determinarTurno(clics_totales)  # Determinar el turno del equipo
+                                aparienciaGol(gol, turno_equipo)  # Actualizar la apariencia de los círculos de gol
+                                canal_silbato.play(sonido_silbato) # Sonando para comenzar a tirar goles
+
+                            
+                        if (posicionPaleta2.collidepoint(event.pos)):
+                            # Verificar si ha pasado el tiempo adecuado entre clics
+                            if tiempoSegundaPaleta + tiempo_entre_turnos < pygame.time.get_ticks():
+                                # Actualizar el tiempo del último clic
+                                tiempoSegundaPaleta = pygame.time.get_ticks()
+                                pygame.mixer.music.set_volume(volumenGlobal * 0.005)  # Reducir el volumen de la música de fondo a la mitad
+                                tiempoSegundaPaleta = pygame.time.get_ticks() #Obteniendo el tiempo inicial de la segunda paleta
+                                if (portero_posicion == 2):
+                                    sonido_tristeza.play()
+                                    print("No fue gol")
+                                    gol = False
+                                else:
+                                    sonido_festejo.play()
+                                    print("GOL")
+                                    gol = True
+                                if tiempoSegundaPaleta > tiempo_entre_turnos:
+                                    sonido_tristeza.play()
+                                    print("No fue gol")
+                                    gol = False
+                                clics_totales += 1  # Incrementar el contador de clics totales
+                                turno_equipo = determinarTurno(clics_totales)  # Determinar el turno del equipo
+                                aparienciaGol(gol, turno_equipo)  # Actualizar la apariencia de los círculos de gol
+                                canal_silbato.play(sonido_silbato) # Sonando para comenzar a tirar goles
+                            
+                        if (posicionPaleta3.collidepoint(event.pos)):
+                            # Verificar si ha pasado el tiempo adecuado entre clics
+                            if tiempoTercerPaleta + tiempo_entre_turnos < pygame.time.get_ticks():
+                                # Actualizar el tiempo del último clic
+                                tiempoTercerPaleta = pygame.time.get_ticks()
+                            pygame.mixer.music.set_volume(volumenGlobal * 0.005)  # Reducir el volumen de la música de fondo a la mitad
+                            tiempoTercerPaleta = pygame.time.get_ticks() #Obteniendo el tiempo inicial de la tercer paleta
+                            if (portero_posicion == 3):
+                                sonido_tristeza.play()
+                                print("No fue gol")
+                                gol = False
+                            else:
+                                sonido_festejo.play()
+                                print("GOL")
+                                gol = True
+                            if tiempoTercerPaleta > tiempo_entre_turnos:
+                                sonido_tristeza.play()
+                                print("No fue gol")
+                                gol = False
+                            clics_totales += 1  # Incrementar el contador de clics totales
+                            turno_equipo = determinarTurno(clics_totales)  # Determinar el turno del equipo
+                            aparienciaGol(gol, turno_equipo)  # Actualizar la apariencia de los círculos de gol
+                            canal_silbato.play(sonido_silbato) # Sonando para comenzar a tirar goles
+                            
+                        if (posicionPaleta4.collidepoint(event.pos)):
+                            # Verificar si ha pasado el tiempo adecuado entre clics
+                            if tiempoCuartaPaleta + tiempo_entre_turnos < pygame.time.get_ticks():
+                                # Actualizar el tiempo del último clic
+                                tiempoCuartaPaleta = pygame.time.get_ticks()
+                            pygame.mixer.music.set_volume(volumenGlobal * 0.005)  # Reducir el volumen de la música de fondo a la mitad
+                            tiempoCuartaPaleta = pygame.time.get_ticks() #Obteniendo el tiempo inicial de la cuarta paleta
+                            if (portero_posicion == 4):
+                                sonido_tristeza.play()
+                                print("No fue gol")
+                                gol = False
+                            else:
+                                sonido_festejo.play()
+                                print("GOL")
+                                gol = True
+                            if tiempoCuartaPaleta > tiempo_entre_turnos:
+                                sonido_tristeza.play()
+                                print("No fue gol")
+                                gol = False
+                            clics_totales += 1  # Incrementar el contador de clics totales
+                            turno_equipo = determinarTurno(clics_totales)  # Determinar el turno del equipo
+                            aparienciaGol(gol, turno_equipo)  # Actualizar la apariencia de los círculos de gol
+                            canal_silbato.play(sonido_silbato) # Sonando para comenzar a tirar goles
+                            
+                        if (posicionPaleta5.collidepoint(event.pos)):
+                            # Verificar si ha pasado el tiempo adecuado entre clics
+                            if tiempoQuintaPaleta + tiempo_entre_turnos < pygame.time.get_ticks():
+                                # Actualizar el tiempo del último clic
+                                tiempoQuintaPaleta = pygame.time.get_ticks()
+                            pygame.mixer.music.set_volume(volumenGlobal * 0.005)  # Reducir el volumen de la música de fondo a la mitad
+                            tiempoQuintaPaleta = pygame.time.get_ticks() #Obteniendo el tiempo inicial de la quinta paleta
+                            if (portero_posicion == 5):
+                                sonido_tristeza.play()
+                                print("No fue gol")
+                                gol = False
+                            else:
+                                sonido_festejo.play()
+                                print("GOL")
+                                gol = True
+                            if tiempoQuintaPaleta > tiempo_entre_turnos:
+                                sonido_tristeza.play()
+                                print("No fue gol")
+                                gol = False
+                            clics_totales += 1  # Incrementar el contador de clics totales
+                            turno_equipo = determinarTurno(clics_totales)  # Determinar el turno del equipo
+                            aparienciaGol(gol, turno_equipo)  # Actualizar la apariencia de los círculos de gol
+                            canal_silbato.play(sonido_silbato) # Sonando para comenzar a tirar goles
+                            
+                        if (posicionPaleta6.collidepoint(event.pos)):
+                            # Verificar si ha pasado el tiempo adecuado entre clics
+                            if tiempoSextaPaleta + tiempo_entre_turnos < pygame.time.get_ticks():
+                                # Actualizar el tiempo del último clic
+                                tiempoSextaPaleta = pygame.time.get_ticks()
+                            pygame.mixer.music.set_volume(volumenGlobal * 0.005)  # Reducir el volumen de la música de fondo a la mitad
+                            tiempoSextaPaleta = pygame.time.get_ticks() #Obteniendo el tiempo inicial de la sexta paleta
+                            if (portero_posicion == 6):
+                                sonido_tristeza.play()
+                                print("No fue gol")
+                                gol = False
+                            else:
+                                sonido_festejo.play()
+                                print("GOL")
+                                gol = True
+                            if tiempoSextaPaleta > tiempo_entre_turnos:
+                                sonido_tristeza.play()
+                                print("No fue gol")
+                                gol = False
+                            clics_totales += 1  # Incrementar el contador de clics totales
+                            turno_equipo = determinarTurno(clics_totales)  # Determinar el turno del equipo
+                            aparienciaGol(gol, turno_equipo)  # Actualizar la apariencia de los círculos de gol
+                            canal_silbato.play(sonido_silbato) # Sonando para comenzar a tirar goles
+                    else:
+                        if (posicionPaleta1.collidepoint(event.pos)):
+                            pygame.mixer.music.set_volume(volumenGlobal * 0.005)  # Reducir el volumen de la música de fondo a la mitad
+                            if (portero_posicion == 1):
+                                sonido_tristeza.play()
+                                print("No fue gol")
+                                gol = False
+                            else:
+                                sonido_festejo.play()
+                                print("GOL")
+                                gol = True
+                            clics_totales += 1  # Incrementar el contador de clics totales
+                            turno_equipo = determinarTurno(clics_totales)  # Determinar el turno del equipo
+                            aparienciaGol(gol, turno_equipo)  # Actualizar la apariencia de los círculos de gol
+                        if (posicionPaleta2.collidepoint(event.pos)):
+                            pygame.mixer.music.set_volume(volumenGlobal * 0.005)  # Reducir el volumen de la música de fondo a la mitad
+                            if (portero_posicion == 2):
+                                sonido_tristeza.play()
+                                print("No fue gol")
+                                gol = False
+                            else:
+                                sonido_festejo.play()
+                                print("GOL")
+                                gol = True
+                            clics_totales += 1  # Incrementar el contador de clics totales
+                            turno_equipo = determinarTurno(clics_totales)  # Determinar el turno del equipo
+                            aparienciaGol(gol, turno_equipo)  # Actualizar la apariencia de los círculos de gol
+                        if (posicionPaleta3.collidepoint(event.pos)):
+                            pygame.mixer.music.set_volume(volumenGlobal * 0.005)  # Reducir el volumen de la música de fondo a la mitad
+                            if (portero_posicion == 3):
+                                sonido_tristeza.play()
+                                print("No fue gol")
+                                gol = False
+                            else:
+                                sonido_festejo.play()
+                                print("GOL")
+                                gol = True
+                            clics_totales += 1  # Incrementar el contador de clics totales
+                            turno_equipo = determinarTurno(clics_totales)  # Determinar el turno del equipo
+                            aparienciaGol(gol, turno_equipo)  # Actualizar la apariencia de los círculos de gol
+                        if (posicionPaleta4.collidepoint(event.pos)):
+                            pygame.mixer.music.set_volume(volumenGlobal * 0.005)  # Reducir el volumen de la música de fondo a la mitad
+                            if (portero_posicion == 4):
+                                sonido_tristeza.play()
+                                print("No fue gol")
+                                gol = False
+                            else:
+                                sonido_festejo.play()
+                                print("GOL")
+                                gol = True
+                            clics_totales += 1  # Incrementar el contador de clics totales
+                            turno_equipo = determinarTurno(clics_totales)  # Determinar el turno del equipo
+                            aparienciaGol(gol, turno_equipo)  # Actualizar la apariencia de los círculos de gol
+                        if (posicionPaleta5.collidepoint(event.pos)):
+                            pygame.mixer.music.set_volume(volumenGlobal * 0.005)  # Reducir el volumen de la música de fondo a la mitad
+                            if (portero_posicion == 5):
+                                sonido_tristeza.play()
+                                print("No fue gol")
+                                gol = False
+                            else:
+                                sonido_festejo.play()
+                                print("GOL")
+                                gol = True
+                            clics_totales += 1  # Incrementar el contador de clics totales
+                            turno_equipo = determinarTurno(clics_totales)  # Determinar el turno del equipo
+                            aparienciaGol(gol, turno_equipo)  # Actualizar la apariencia de los círculos de gol
+                        if (posicionPaleta6.collidepoint(event.pos)):
+                            pygame.mixer.music.set_volume(volumenGlobal * 0.005)  # Reducir el volumen de la música de fondo a la mitad
+                            if (portero_posicion == 6):
+                                sonido_tristeza.play()
+                                print("No fue gol")
+                                gol = False
+                            else:
+                                sonido_festejo.play()
+                                print("GOL")
+                                gol = True
+                            clics_totales += 1  # Incrementar el contador de clics totales
+                            turno_equipo = determinarTurno(clics_totales)  # Determinar el turno del equipo
+                            aparienciaGol(gol, turno_equipo)  # Actualizar la apariencia de los círculos de gol
+                        
+                    if(equipoSeleccionado):
+                        if (equipoSeleccionado==1):
+                            equipo1 = tipografia.render("Argentina", True, ("#7ED957")) #Indicando el equipo
+                            ventanaEstadisticas.blit(equipo1, (180, 120)) #Reflejando el texto
+                        elif (equipoSeleccionado==2):
+                            equipo2 = tipografia.render("Barcelona", True, ("#7ED957")) #Indicando el equipo
+                            ventanaEstadisticas.blit(equipo2, (180, 120)) #Reflejando el texto
+                        elif (equipoSeleccionado==3):
+                            equipo3 = tipografia.render("Bayern", True, ("#7ED957")) #Indicando el equipo
+                            ventanaEstadisticas.blit(equipo3, (180, 120)) #Reflejando el texto
+                    if(equipo_contrario):
+                        if (equipo_contrario=="Argentina"):
+                            equipo4 = tipografia.render("Argentina", True, ("#5CE1E6")) #Indicando el equipo
+                            ventanaEstadisticas.blit(equipo4, (670, 120)) #Reflejando el texto
+                        elif (equipo_contrario=="Barcelona"):
+                            equipo5 = tipografia.render("Barcelona", True, ("#5CE1E6")) #Indicando el equipo
+                            ventanaEstadisticas.blit(equipo5, (670, 120)) #Reflejando el texto
+                        elif (equipo_contrario=="Bayern"):
+                            equipo6 = tipografia.render("Bayern", True, ("#5CE1E6")) #Indicando el equipo
+                            ventanaEstadisticas.blit(equipo6, (670, 120)) #Reflejando el texto
+                    tiempo_actual = pygame.time.get_ticks()
+                    if (tiempo_actual - tiempo_ultimo_clic) > tiempo_entre_turnos:
+                        # Realizar acciones del clic (reproducir sonido, verificar gol, etc.)
+                        tiempo_ultimo_clic = tiempo_actual  # Actualizar el tiempo del último clic
+        pygame.display.flip( )
+# ----------------------------------- Finalizando la Ventana de Estadisticas ---------------------------------
 
 # ----------------------------------- Iniciando la Ventana de Principal -----------------------------------
 def screenPrincipal(volumenGlobal):
@@ -860,8 +1441,8 @@ def screenPrincipal(volumenGlobal):
                         screenConfiguracion() # Ir a Ventana de Configuración
                     elif jugar.collidepoint(event.pos):
                         ventanaPrincipal.fill("#000000") # Limpiando Ventana Principal
-                        screenJuego() # Ir a Ventana de Juego
-        pygame.display.flip() # Actualizando Pantalla
+                        screenJuego() #Ir a Ventana de Juego
+        pygame.display.flip() #Actualizando Pantalla
 # ----------------------------------- Finalizando la Ventana Principal -----------------------------------
 screenPrincipal(volumenGlobal)
 pygame.quit()
