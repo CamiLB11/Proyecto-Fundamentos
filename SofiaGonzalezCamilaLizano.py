@@ -61,6 +61,27 @@ def screenInformacion():
     # ---- ACERCA DEL JUEGO ----
     titulo = tipografia.render("Acerca del Juego", True, ("#000000")) #Indicando el título de acerca del juego
     ventanaInformacion.blit(titulo, (410, 465)) #Reflejando el texto
+    contexto = tipografia.render("El juego es una simulación de penales, consiste en que con una bola", True, ("#000000")) #Indicando contexto
+    xcontexto = (ventanaInformacion.get_width() - contexto.get_width()) / 2 #Calcular la posición horizontal para centrar el texto
+    ventanaInformacion.blit(contexto, (xcontexto, 500)) #Reflejando el texto
+    contexto1 = tipografia.render("se debe de lanzar a las paletas para anotar goles. Se tienen dos", True, ("#000000")) #Indicando contexto
+    xcontexto1 = (ventanaInformacion.get_width() - contexto1.get_width()) / 2 #Calcular la posición horizontal para centrar el texto
+    ventanaInformacion.blit(contexto1, (xcontexto1, 520)) #Reflejando el texto
+    contexto2 = tipografia.render("equipos, siendo uno el local y el otro el visitante. Usted puede", True, ("#000000")) #Indicando contexto
+    xcontexto2 = (ventanaInformacion.get_width() - contexto2.get_width()) / 2 #Calcular la posición horizontal para centrar el texto
+    ventanaInformacion.blit(contexto2, (xcontexto2, 540)) #Reflejando el texto
+    contexto3 = tipografia.render("elegir de tres opciones el equipo en la ventana de configuraciones", True, ("#000000")) #Indicando contexto
+    xcontexto3 = (ventanaInformacion.get_width() - contexto3.get_width()) / 2 #Calcular la posición horizontal para centrar el texto
+    ventanaInformacion.blit(contexto3, (xcontexto3, 560)) #Reflejando el texto
+    contexto4 = tipografia.render("y por medio de una moneda se decide si es local o visitante. Al", True, ("#000000")) #Indicando contexto
+    xcontexto4 = (ventanaInformacion.get_width() - contexto4.get_width()) / 2 #Calcular la posición horizontal para centrar el texto
+    ventanaInformacion.blit(contexto4, (xcontexto4, 580)) #Reflejando el texto
+    contexto5 = tipografia.render("meter un gol se encienden todos los leds para simular la celebración", True, ("#000000")) #Indicando contexto
+    xcontexto5 = (ventanaInformacion.get_width() - contexto5.get_width()) / 2 #Calcular la posición horizontal para centrar el texto
+    ventanaInformacion.blit(contexto5, (xcontexto5, 600)) #Reflejando el texto
+    contexto6 = tipografia.render("(junto a sonidos de aplausos) y en caso contrario abucheos.", True, ("#000000")) #Indicando contexto
+    xcontexto6 = (ventanaInformacion.get_width() - contexto6.get_width()) / 2 #Calcular la posición horizontal para centrar el texto
+    ventanaInformacion.blit(contexto6, (xcontexto6, 620)) #Reflejando el texto
     # ---- Bucle de la ventana de Información ----
     while True:
         for event in pygame.event.get(): #Iterando sobre eventos
@@ -1006,7 +1027,7 @@ def screenResultados():
 
 # ----------------------------------- Finalizando la Ventana de Resultados ---------------------------------
 
-# ----------------------------------- Iniciando la Ventana de Estadisticas -----------------------------------
+# ----------------------------------- Iniciando la Ventana de Estadisticas / Juego -----------------------------------
 def screenEstadisticas():
     global equipo_contrario, estado_gol
     global equipo1_goles, equipo2_goles  # Contadores de goles
@@ -1107,6 +1128,8 @@ def screenEstadisticas():
                 if coordenadas_esperando_gol_contrario:  # Verificar si hay elementos en la lista
                     coordenada = coordenadas_esperando_gol_contrario.pop(0)  # Tomar la primera coordenada del equipo contrario
                     ventanaEstadisticas.blit(siGol, coordenada)  # Dibujar círculo de gol para el equipo contrario
+            # Reproducir sonido de gol
+            sonido_festejo.play()
         else:  # Si no hubo gol
             if turno_equipo == 1:  # Si es el turno del primer equipo (local)
                 if coordenadas_esperando_gol_elegido:  # Verificar si hay elementos en la lista
@@ -1116,6 +1139,9 @@ def screenEstadisticas():
                 if coordenadas_esperando_gol_contrario:  # Verificar si hay elementos en la lista
                     coordenada = coordenadas_esperando_gol_contrario.pop(0)  # Tomar la primera coordenada del equipo contrario
                     ventanaEstadisticas.blit(noGol, coordenada)  # Dibujar círculo de no gol para el equipo contrario
+            # Reproducir sonido de tristeza
+            sonido_tristeza.play()
+
 
     #---- Comienzo de Equipo ----
     turno_equipo = 1  # Empezamos con el equipo local
@@ -1128,243 +1154,263 @@ def screenEstadisticas():
     tiempoCuartaPaleta = 0
     tiempoQuintaPaleta = 0
     tiempoSextaPaleta = 0
+    
+    # Definir la función para determinar si un gol fue marcado
+    def determinarGol(portero_posicion, paleta_clic):
+        return portero_posicion != paleta_clic
+    
+    # Definir la función para determinar el equipo contrario
+    def determinarEquipoContrario(turno_equipo):
+        if turno_equipo == 1:
+            return 2  # Si el turno es del equipo 1, el equipo contrario es el equipo 2
+        else:
+            return 1  # Si el turno es del equipo 2, el equipo contrario es el equipo 1
+
 
     # ---- Bucle de la ventana de Estadisticas ----
     while True:
+        tiempo_actual = pygame.time.get_ticks()
         for event in pygame.event.get(): #Iterando sobre eventos
-            if (event.type == pygame.QUIT): #Si usuario intenta cerrar ventana:
+            if event.type == pygame.QUIT: #Si usuario intenta cerrar ventana:
                 pygame.quit() #Cerrando ventana
                 sys.exit() #Saliendo del script Python por completo para detener el programa en su totalidad
-            elif (event.type == pygame.MOUSEBUTTONDOWN): #Detectar clic del mouse
-                if (event.button == 1): #Verificar si fue clic izquierdo
+            elif event.type == pygame.MOUSEBUTTONDOWN: #Detectar clic del mouse
+                if event.button == 1: #Verificar si fue clic izquierdo
                     x, y = event.pos #Guardando en variables donde se hizo clic
                     # ---- Verificar si el clic fue dentro de alguno de los botones de la Ventana de Información ----
-                    if (15 < x < 65 and 15 < y < 65): #Botón de Regreso
+                    if 15 < x < 65 and 15 < y < 65: #Botón de Regreso
                         screenPrincipal(volumenGlobal) #Ir a ventana principal
                     if turno_equipo == 1: # Si es el turno del equipo local
                         
                         if (posicionPaleta1.collidepoint(event.pos)):
                             # Verificar si ha pasado el tiempo adecuado entre clics
-                            if tiempoPrimerPaleta + tiempo_entre_turnos < pygame.time.get_ticks():
+                            if tiempoPrimerPaleta + tiempo_entre_turnos < tiempo_actual:
                                 # Actualizar el tiempo del último clic
-                                tiempoPrimerPaleta = pygame.time.get_ticks()
+                                tiempoPrimerPaleta = tiempo_actual
                                 pygame.mixer.music.set_volume(volumenGlobal * 0.005)  # Reducir el volumen de la música de fondo a la mitad
+                                clics_totales += 1
                                 if (portero_posicion == 1):
-                                    sonido_tristeza.play()
                                     print("No fue gol")
                                     gol = False
+                                    sonido_tristeza.play()  # Reproducir sonido de tristeza
                                 else:
-                                    sonido_festejo.play()
                                     print("GOL")
                                     gol = True
-                                if tiempoTercerPaleta > tiempo_entre_turnos:
-                                    sonido_tristeza.play()
-                                    print("No fue gol")
-                                    gol = False
-                                clics_totales += 1  # Incrementar el contador de clics totales
-                                turno_equipo = determinarTurno(clics_totales)  # Determinar el turno del equipo
-                                aparienciaGol(gol, turno_equipo)  # Actualizar la apariencia de los círculos de gol
+                                    sonido_festejo.play()  # Reproducir sonido de festejo
+                                turno_equipo = determinarTurno(clics_totales)
+                                aparienciaGol(gol, turno_equipo)
                                 canal_silbato.play(sonido_silbato) # Sonando para comenzar a tirar goles
 
                             
                         if (posicionPaleta2.collidepoint(event.pos)):
                             # Verificar si ha pasado el tiempo adecuado entre clics
-                            if tiempoSegundaPaleta + tiempo_entre_turnos < pygame.time.get_ticks():
+                            if tiempoSegundaPaleta + tiempo_entre_turnos < tiempo_actual:
                                 # Actualizar el tiempo del último clic
-                                tiempoSegundaPaleta = pygame.time.get_ticks()
+                                tiempoSegundaPaleta = tiempo_actual
                                 pygame.mixer.music.set_volume(volumenGlobal * 0.005)  # Reducir el volumen de la música de fondo a la mitad
-                                tiempoSegundaPaleta = pygame.time.get_ticks() #Obteniendo el tiempo inicial de la segunda paleta
+                                clics_totales += 1
                                 if (portero_posicion == 2):
-                                    sonido_tristeza.play()
                                     print("No fue gol")
                                     gol = False
+                                    sonido_tristeza.play()  # Reproducir sonido de tristeza
                                 else:
-                                    sonido_festejo.play()
                                     print("GOL")
                                     gol = True
-                                if tiempoSegundaPaleta > tiempo_entre_turnos:
-                                    sonido_tristeza.play()
+                                    sonido_festejo.play()  # Reproducir sonido de festejo
+                                turno_equipo = determinarTurno(clics_totales)
+                                aparienciaGol(gol, turno_equipo)
+                                canal_silbato.play(sonido_silbato) # Sonando para comenzar a tirar goles
+                        
+                        if (posicionPaleta3.collidepoint(event.pos)):
+                            # Verificar si ha pasado el tiempo adecuado entre clics
+                            if tiempoTercerPaleta + tiempo_entre_turnos < tiempo_actual:
+                                # Actualizar el tiempo del último clic
+                                tiempoTercerPaleta = tiempo_actual
+                                pygame.mixer.music.set_volume(volumenGlobal * 0.005)  # Reducir el volumen de la música de fondo a la mitad
+                                clics_totales += 1
+                                if (portero_posicion == 3):
                                     print("No fue gol")
                                     gol = False
-                                clics_totales += 1  # Incrementar el contador de clics totales
-                                turno_equipo = determinarTurno(clics_totales)  # Determinar el turno del equipo
-                                aparienciaGol(gol, turno_equipo)  # Actualizar la apariencia de los círculos de gol
+                                    sonido_tristeza.play()  # Reproducir sonido de tristeza
+                                else:
+                                    print("GOL")
+                                    gol = True
+                                    sonido_festejo.play()  # Reproducir sonido de festejo
+                                turno_equipo = determinarTurno(clics_totales)
+                                aparienciaGol(gol, turno_equipo)
+                                canal_silbato.play(sonido_silbato) # Sonando para comenzar a tirar goles
+                        
+                        if (posicionPaleta4.collidepoint(event.pos)):
+                            # Verificar si ha pasado el tiempo adecuado entre clics
+                            if tiempoCuartaPaleta + tiempo_entre_turnos < tiempo_actual:
+                                # Actualizar el tiempo del último clic
+                                tiempoCuartaPaleta = tiempo_actual
+                                pygame.mixer.music.set_volume(volumenGlobal * 0.005)  # Reducir el volumen de la música de fondo a la mitad
+                                clics_totales += 1
+                                if (portero_posicion == 4):
+                                    print("No fue gol")
+                                    gol = False
+                                    sonido_tristeza.play()  # Reproducir sonido de tristeza
+                                else:
+                                    print("GOL")
+                                    gol = True
+                                    sonido_festejo.play()  # Reproducir sonido de festejo
+                                turno_equipo = determinarTurno(clics_totales)
+                                aparienciaGol(gol, turno_equipo)
                                 canal_silbato.play(sonido_silbato) # Sonando para comenzar a tirar goles
                             
-                        if (posicionPaleta3.collidepoint(event.pos)):
-                            # Verificar si ha pasado el tiempo adecuado entre clics
-                            if tiempoTercerPaleta + tiempo_entre_turnos < pygame.time.get_ticks():
-                                # Actualizar el tiempo del último clic
-                                tiempoTercerPaleta = pygame.time.get_ticks()
-                            pygame.mixer.music.set_volume(volumenGlobal * 0.005)  # Reducir el volumen de la música de fondo a la mitad
-                            tiempoTercerPaleta = pygame.time.get_ticks() #Obteniendo el tiempo inicial de la tercer paleta
-                            if (portero_posicion == 3):
-                                sonido_tristeza.play()
-                                print("No fue gol")
-                                gol = False
-                            else:
-                                sonido_festejo.play()
-                                print("GOL")
-                                gol = True
-                            if tiempoTercerPaleta > tiempo_entre_turnos:
-                                sonido_tristeza.play()
-                                print("No fue gol")
-                                gol = False
-                            clics_totales += 1  # Incrementar el contador de clics totales
-                            turno_equipo = determinarTurno(clics_totales)  # Determinar el turno del equipo
-                            aparienciaGol(gol, turno_equipo)  # Actualizar la apariencia de los círculos de gol
-                            canal_silbato.play(sonido_silbato) # Sonando para comenzar a tirar goles
-                            
-                        if (posicionPaleta4.collidepoint(event.pos)):
-                            # Verificar si ha pasado el tiempo adecuado entre clics
-                            if tiempoCuartaPaleta + tiempo_entre_turnos < pygame.time.get_ticks():
-                                # Actualizar el tiempo del último clic
-                                tiempoCuartaPaleta = pygame.time.get_ticks()
-                            pygame.mixer.music.set_volume(volumenGlobal * 0.005)  # Reducir el volumen de la música de fondo a la mitad
-                            tiempoCuartaPaleta = pygame.time.get_ticks() #Obteniendo el tiempo inicial de la cuarta paleta
-                            if (portero_posicion == 4):
-                                sonido_tristeza.play()
-                                print("No fue gol")
-                                gol = False
-                            else:
-                                sonido_festejo.play()
-                                print("GOL")
-                                gol = True
-                            if tiempoCuartaPaleta > tiempo_entre_turnos:
-                                sonido_tristeza.play()
-                                print("No fue gol")
-                                gol = False
-                            clics_totales += 1  # Incrementar el contador de clics totales
-                            turno_equipo = determinarTurno(clics_totales)  # Determinar el turno del equipo
-                            aparienciaGol(gol, turno_equipo)  # Actualizar la apariencia de los círculos de gol
-                            canal_silbato.play(sonido_silbato) # Sonando para comenzar a tirar goles
-                            
                         if (posicionPaleta5.collidepoint(event.pos)):
                             # Verificar si ha pasado el tiempo adecuado entre clics
-                            if tiempoQuintaPaleta + tiempo_entre_turnos < pygame.time.get_ticks():
+                            if tiempoQuintaPaleta + tiempo_entre_turnos < tiempo_actual:
                                 # Actualizar el tiempo del último clic
-                                tiempoQuintaPaleta = pygame.time.get_ticks()
-                            pygame.mixer.music.set_volume(volumenGlobal * 0.005)  # Reducir el volumen de la música de fondo a la mitad
-                            tiempoQuintaPaleta = pygame.time.get_ticks() #Obteniendo el tiempo inicial de la quinta paleta
-                            if (portero_posicion == 5):
-                                sonido_tristeza.play()
-                                print("No fue gol")
-                                gol = False
-                            else:
-                                sonido_festejo.play()
-                                print("GOL")
-                                gol = True
-                            if tiempoQuintaPaleta > tiempo_entre_turnos:
-                                sonido_tristeza.play()
-                                print("No fue gol")
-                                gol = False
-                            clics_totales += 1  # Incrementar el contador de clics totales
-                            turno_equipo = determinarTurno(clics_totales)  # Determinar el turno del equipo
-                            aparienciaGol(gol, turno_equipo)  # Actualizar la apariencia de los círculos de gol
-                            canal_silbato.play(sonido_silbato) # Sonando para comenzar a tirar goles
+                                tiempoQuintaPaleta = tiempo_actual
+                                pygame.mixer.music.set_volume(volumenGlobal * 0.005)  # Reducir el volumen de la música de fondo a la mitad
+                                clics_totales += 1
+                                if (portero_posicion == 5):
+                                    print("No fue gol")
+                                    gol = False
+                                    sonido_tristeza.play()  # Reproducir sonido de tristeza
+                                else:
+                                    print("GOL")
+                                    gol = True
+                                    sonido_festejo.play()  # Reproducir sonido de festejo
+                                turno_equipo = determinarTurno(clics_totales)
+                                aparienciaGol(gol, turno_equipo)
+                                canal_silbato.play(sonido_silbato) # Sonando para comenzar a tirar goles
                             
                         if (posicionPaleta6.collidepoint(event.pos)):
                             # Verificar si ha pasado el tiempo adecuado entre clics
-                            if tiempoSextaPaleta + tiempo_entre_turnos < pygame.time.get_ticks():
+                            if tiempoSextaPaleta + tiempo_entre_turnos < tiempo_actual:
                                 # Actualizar el tiempo del último clic
-                                tiempoSextaPaleta = pygame.time.get_ticks()
-                            pygame.mixer.music.set_volume(volumenGlobal * 0.005)  # Reducir el volumen de la música de fondo a la mitad
-                            tiempoSextaPaleta = pygame.time.get_ticks() #Obteniendo el tiempo inicial de la sexta paleta
-                            if (portero_posicion == 6):
-                                sonido_tristeza.play()
-                                print("No fue gol")
-                                gol = False
-                            else:
-                                sonido_festejo.play()
-                                print("GOL")
-                                gol = True
-                            if tiempoSextaPaleta > tiempo_entre_turnos:
-                                sonido_tristeza.play()
-                                print("No fue gol")
-                                gol = False
-                            clics_totales += 1  # Incrementar el contador de clics totales
-                            turno_equipo = determinarTurno(clics_totales)  # Determinar el turno del equipo
-                            aparienciaGol(gol, turno_equipo)  # Actualizar la apariencia de los círculos de gol
-                            canal_silbato.play(sonido_silbato) # Sonando para comenzar a tirar goles
-                    else:
+                                tiempoSextaPaleta = tiempo_actual
+                                pygame.mixer.music.set_volume(volumenGlobal * 0.005)  # Reducir el volumen de la música de fondo a la mitad
+                                clics_totales += 1
+                                if (portero_posicion == 6):
+                                    print("No fue gol")
+                                    gol = False
+                                    sonido_tristeza.play()  # Reproducir sonido de tristeza
+                                else:
+                                    print("GOL")
+                                    gol = True
+                                    sonido_festejo.play()  # Reproducir sonido de festejo
+                                turno_equipo = determinarTurno(clics_totales)
+                                aparienciaGol(gol, turno_equipo)
+                                canal_silbato.play(sonido_silbato) # Sonando para comenzar a tirar goles
+
+                    else: #Si el equipo es visitante
                         if (posicionPaleta1.collidepoint(event.pos)):
-                            pygame.mixer.music.set_volume(volumenGlobal * 0.005)  # Reducir el volumen de la música de fondo a la mitad
-                            if (portero_posicion == 1):
-                                sonido_tristeza.play()
-                                print("No fue gol")
-                                gol = False
-                            else:
-                                sonido_festejo.play()
-                                print("GOL")
-                                gol = True
-                            clics_totales += 1  # Incrementar el contador de clics totales
-                            turno_equipo = determinarTurno(clics_totales)  # Determinar el turno del equipo
-                            aparienciaGol(gol, turno_equipo)  # Actualizar la apariencia de los círculos de gol
+                            # Verificar si ha pasado el tiempo adecuado entre clics
+                            if tiempoPrimerPaleta + tiempo_entre_turnos < tiempo_actual:
+                                # Actualizar el tiempo del último clic
+                                tiempoPrimerPaleta = tiempo_actual
+                                pygame.mixer.music.set_volume(volumenGlobal * 0.005)  # Reducir el volumen de la música de fondo a la mitad
+                                clics_totales += 1
+                                if (portero_posicion == 1):
+                                    print("No fue gol")
+                                    gol = False
+                                    sonido_tristeza.play()  # Reproducir sonido de tristeza
+                                else:
+                                    print("GOL")
+                                    gol = True
+                                    sonido_festejo.play()  # Reproducir sonido de festejo
+                                turno_equipo = determinarTurno(clics_totales)
+                                aparienciaGol(gol, turno_equipo)
+                                canal_silbato.play(sonido_silbato) # Sonando para comenzar a tirar goles
+
                         if (posicionPaleta2.collidepoint(event.pos)):
-                            pygame.mixer.music.set_volume(volumenGlobal * 0.005)  # Reducir el volumen de la música de fondo a la mitad
-                            if (portero_posicion == 2):
-                                sonido_tristeza.play()
-                                print("No fue gol")
-                                gol = False
-                            else:
-                                sonido_festejo.play()
-                                print("GOL")
-                                gol = True
-                            clics_totales += 1  # Incrementar el contador de clics totales
-                            turno_equipo = determinarTurno(clics_totales)  # Determinar el turno del equipo
-                            aparienciaGol(gol, turno_equipo)  # Actualizar la apariencia de los círculos de gol
+                            # Verificar si ha pasado el tiempo adecuado entre clics
+                            if tiempoSegundaPaleta + tiempo_entre_turnos < tiempo_actual:
+                                # Actualizar el tiempo del último clic
+                                tiempoSegundaPaleta = tiempo_actual
+                                pygame.mixer.music.set_volume(volumenGlobal * 0.005)  # Reducir el volumen de la música de fondo a la mitad
+                                clics_totales += 1
+                                if (portero_posicion == 2):
+                                    print("No fue gol")
+                                    gol = False
+                                    sonido_tristeza.play()  # Reproducir sonido de tristeza
+                                else:
+                                    print("GOL")
+                                    gol = True
+                                    sonido_festejo.play()  # Reproducir sonido de festejo
+                                turno_equipo = determinarTurno(clics_totales)
+                                aparienciaGol(gol, turno_equipo)
+                                canal_silbato.play(sonido_silbato) # Sonando para comenzar a tirar goles
+                        
                         if (posicionPaleta3.collidepoint(event.pos)):
-                            pygame.mixer.music.set_volume(volumenGlobal * 0.005)  # Reducir el volumen de la música de fondo a la mitad
-                            if (portero_posicion == 3):
-                                sonido_tristeza.play()
-                                print("No fue gol")
-                                gol = False
-                            else:
-                                sonido_festejo.play()
-                                print("GOL")
-                                gol = True
-                            clics_totales += 1  # Incrementar el contador de clics totales
-                            turno_equipo = determinarTurno(clics_totales)  # Determinar el turno del equipo
-                            aparienciaGol(gol, turno_equipo)  # Actualizar la apariencia de los círculos de gol
+                            # Verificar si ha pasado el tiempo adecuado entre clics
+                            if tiempoTercerPaleta + tiempo_entre_turnos < tiempo_actual:
+                                # Actualizar el tiempo del último clic
+                                tiempoTercerPaleta = tiempo_actual
+                                pygame.mixer.music.set_volume(volumenGlobal * 0.005)  # Reducir el volumen de la música de fondo a la mitad
+                                clics_totales += 1
+                                if (portero_posicion == 3):
+                                    print("No fue gol")
+                                    gol = False
+                                    sonido_tristeza.play()  # Reproducir sonido de tristeza
+                                else:
+                                    print("GOL")
+                                    gol = True
+                                    sonido_festejo.play()  # Reproducir sonido de festejo
+                                turno_equipo = determinarTurno(clics_totales)
+                                aparienciaGol(gol, turno_equipo)
+                                canal_silbato.play(sonido_silbato) # Sonando para comenzar a tirar goles
+                        
                         if (posicionPaleta4.collidepoint(event.pos)):
-                            pygame.mixer.music.set_volume(volumenGlobal * 0.005)  # Reducir el volumen de la música de fondo a la mitad
-                            if (portero_posicion == 4):
-                                sonido_tristeza.play()
-                                print("No fue gol")
-                                gol = False
-                            else:
-                                sonido_festejo.play()
-                                print("GOL")
-                                gol = True
-                            clics_totales += 1  # Incrementar el contador de clics totales
-                            turno_equipo = determinarTurno(clics_totales)  # Determinar el turno del equipo
-                            aparienciaGol(gol, turno_equipo)  # Actualizar la apariencia de los círculos de gol
+                            # Verificar si ha pasado el tiempo adecuado entre clics
+                            if tiempoCuartaPaleta + tiempo_entre_turnos < tiempo_actual:
+                                # Actualizar el tiempo del último clic
+                                tiempoCuartaPaleta = tiempo_actual
+                                pygame.mixer.music.set_volume(volumenGlobal * 0.005)  # Reducir el volumen de la música de fondo a la mitad
+                                clics_totales += 1
+                                if (portero_posicion == 4):
+                                    print("No fue gol")
+                                    gol = False
+                                    sonido_tristeza.play()  # Reproducir sonido de tristeza
+                                else:
+                                    print("GOL")
+                                    gol = True
+                                    sonido_festejo.play()  # Reproducir sonido de festejo
+                                turno_equipo = determinarTurno(clics_totales)
+                                aparienciaGol(gol, turno_equipo)
+                                canal_silbato.play(sonido_silbato) # Sonando para comenzar a tirar goles
+                        
                         if (posicionPaleta5.collidepoint(event.pos)):
-                            pygame.mixer.music.set_volume(volumenGlobal * 0.005)  # Reducir el volumen de la música de fondo a la mitad
-                            if (portero_posicion == 5):
-                                sonido_tristeza.play()
-                                print("No fue gol")
-                                gol = False
-                            else:
-                                sonido_festejo.play()
-                                print("GOL")
-                                gol = True
-                            clics_totales += 1  # Incrementar el contador de clics totales
-                            turno_equipo = determinarTurno(clics_totales)  # Determinar el turno del equipo
-                            aparienciaGol(gol, turno_equipo)  # Actualizar la apariencia de los círculos de gol
+                            # Verificar si ha pasado el tiempo adecuado entre clics
+                            if tiempoQuintaPaleta + tiempo_entre_turnos < tiempo_actual:
+                                # Actualizar el tiempo del último clic
+                                tiempoQuintaPaleta = tiempo_actual
+                                pygame.mixer.music.set_volume(volumenGlobal * 0.005)  # Reducir el volumen de la música de fondo a la mitad
+                                clics_totales += 1
+                                if (portero_posicion == 5):
+                                    print("No fue gol")
+                                    gol = False
+                                    sonido_tristeza.play()  # Reproducir sonido de tristeza
+                                else:
+                                    print("GOL")
+                                    gol = True
+                                    sonido_festejo.play()  # Reproducir sonido de festejo
+                                turno_equipo = determinarTurno(clics_totales)
+                                aparienciaGol(gol, turno_equipo)
+                                canal_silbato.play(sonido_silbato) # Sonando para comenzar a tirar goles
+                        
                         if (posicionPaleta6.collidepoint(event.pos)):
-                            pygame.mixer.music.set_volume(volumenGlobal * 0.005)  # Reducir el volumen de la música de fondo a la mitad
-                            if (portero_posicion == 6):
-                                sonido_tristeza.play()
-                                print("No fue gol")
-                                gol = False
-                            else:
-                                sonido_festejo.play()
-                                print("GOL")
-                                gol = True
-                            clics_totales += 1  # Incrementar el contador de clics totales
-                            turno_equipo = determinarTurno(clics_totales)  # Determinar el turno del equipo
-                            aparienciaGol(gol, turno_equipo)  # Actualizar la apariencia de los círculos de gol
+                            # Verificar si ha pasado el tiempo adecuado entre clics
+                            if tiempoSextaPaleta + tiempo_entre_turnos < tiempo_actual:
+                                # Actualizar el tiempo del último clic
+                                tiempoSextaPaleta = tiempo_actual
+                                pygame.mixer.music.set_volume(volumenGlobal * 0.005)  # Reducir el volumen de la música de fondo a la mitad
+                                clics_totales += 1
+                                if (portero_posicion == 6):
+                                    print("No fue gol")
+                                    gol = False
+                                    sonido_tristeza.play()  # Reproducir sonido de tristeza
+                                else:
+                                    print("GOL")
+                                    gol = True
+                                    sonido_festejo.play()  # Reproducir sonido de festejo
+                                turno_equipo = determinarTurno(clics_totales)
+                                aparienciaGol(gol, turno_equipo)
+                                canal_silbato.play(sonido_silbato) # Sonando para comenzar a tirar goles
                         
                     if(equipoSeleccionado):
                         if (equipoSeleccionado==1):
@@ -1390,7 +1436,23 @@ def screenEstadisticas():
                     if (tiempo_actual - tiempo_ultimo_clic) > tiempo_entre_turnos:
                         # Realizar acciones del clic (reproducir sonido, verificar gol, etc.)
                         tiempo_ultimo_clic = tiempo_actual  # Actualizar el tiempo del último clic
-        pygame.display.flip( )
+        tiempo_actual = pygame.time.get_ticks()  # Obtener el tiempo actual
+        # Verificar si ha pasado el tiempo de inactividad para cambiar de turno
+        if (tiempo_actual - tiempo_ultimo_clic) > tiempo_entre_turnos:
+            # Actualizar el tiempo del último clic
+            tiempo_ultimo_clic = tiempo_actual
+            # Determinar el equipo contrario
+            equipo_contrario = determinarEquipoContrario(turno_equipo)
+            # Actualizar el turno del equipo
+            clics_totales += 1
+            turno_equipo = determinarTurno(clics_totales)
+            # Actualizar la apariencia de los círculos de gol para el equipo contrario
+            aparienciaGol(False, turno_equipo)
+
+        pygame.display.flip()
+
+
+
 # ----------------------------------- Finalizando la Ventana de Estadisticas ---------------------------------
 
 # ----------------------------------- Iniciando la Ventana de Principal -----------------------------------
